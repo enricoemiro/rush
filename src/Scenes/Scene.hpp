@@ -4,20 +4,20 @@
 #include <ncurses.h>
 
 struct Screen {
-  unsigned int width,
+  int width,
       height,
       start_x,
       start_y;
   WINDOW *window;
 
-  Screen(unsigned int width,
-         unsigned int height,
-         unsigned int start_x,
-         unsigned int start_y) : width(width),
-                                 height(height),
-                                 start_x(start_x),
-                                 start_y(start_y),
-                                 window(newwin(height + 2, width + 2, start_y, start_x)) {}
+  Screen(int width,
+         int height,
+         int start_x,
+         int start_y) : width(width),
+                        height(height),
+                        start_x(start_x),
+                        start_y(start_y),
+                        window(newwin(height + 2, width + 2, start_y, start_x)) {}
 };
 
 class Scene {

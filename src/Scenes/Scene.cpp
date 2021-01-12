@@ -5,8 +5,7 @@ Scene::Scene(Screen *screen) {
 }
 
 Scene::~Scene() {
-  if (this->screen->window)
-    delwin(this->screen->window);
+  if (this->screen->window) delwin(this->screen->window);
 }
 
 void Scene::draw_edges() {
