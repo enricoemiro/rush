@@ -7,10 +7,10 @@
 #include <string>
 #include <vector>
 
-#include "../../constants.hpp"
+#include "../../Constants.hpp"
+#include "../../Core/Struct/Grid.hpp"
 #include "../Scene.hpp"
 
-#define DEBUG 1
 #define EXIT_IF_TRUE(expression, msg) \
   {                                   \
     if (expression) {                 \
@@ -20,38 +20,14 @@
     }                                 \
   }
 
-struct Grid {
-  int width,
-      height;
-
-  Grid(int width,
-       int height)
-      : width(width),
-        height(height) {}
-};
-
 struct Room {
   char type;
   int start_x;
   int start_y;
 
-  Room(char type, int start_x, int start_y)
-      : type(type),
-        start_x(start_x),
-        start_y(start_y) {}
-
-  Room(const Room &room)
-      : type(room.type),
-        start_x(room.start_x),
-        start_y(room.start_y) {}
+  Room(char type, int start_x, int start_y);
+  Room(const Room &room);
 };
-
-#if DEBUG == 1
-inline std::ostream &operator<<(std::ostream &os, const Room &room) {
-  os << "(" << room.start_x << ", " << room.start_y << ") " << room.type;
-  return os;
-}
-#endif
 
 class Map : public Scene {
   // It as a left and right exit

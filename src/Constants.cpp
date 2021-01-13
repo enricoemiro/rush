@@ -1,6 +1,6 @@
-#include "constants.hpp"
+#include "Constants.hpp"
 
-const std::vector<std::string> OPEN_ROOMS = {
+const std::vector<std::string> Constants::Rooms::CORRIDOR = {
     "0000000000"
     "0000000000"
     "0000000000"
@@ -11,7 +11,7 @@ const std::vector<std::string> OPEN_ROOMS = {
     "0000000000",
 };
 
-const std::vector<std::string> CORRIDOR_ROOMS = {
+const std::vector<std::string> Constants::Rooms::DROP = {
     "0000000000"
     "0000000000"
     "0000000000"
@@ -22,7 +22,7 @@ const std::vector<std::string> CORRIDOR_ROOMS = {
     "0000000000",
 };
 
-const std::vector<std::string> DROP_ROOMS = {
+const std::vector<std::string> Constants::Rooms::LANDING = {
     "0000000000"
     "0000000000"
     "0000000000"
@@ -33,7 +33,7 @@ const std::vector<std::string> DROP_ROOMS = {
     "0000000000",
 };
 
-const std::vector<std::string> LANDING_ROOMS = {
+const std::vector<std::string> Constants::Rooms::OPEN = {
     "0000000000"
     "0000000000"
     "0000000000"

@@ -1,5 +1,17 @@
 #include "Map.hpp"
 
+Room::Room(char type,
+           int start_x,
+           int start_y)
+    : type(type),
+      start_x(start_x),
+      start_y(start_y) {}
+
+Room::Room(const Room &room)
+    : type(room.type),
+      start_x(room.start_x),
+      start_y(room.start_y) {}
+
 Map::Map(Screen *screen, Grid *grid) : Scene(screen) {
   EXIT_IF_TRUE(this->screen->width < grid->width ||
                    this->screen->height < grid->height,
@@ -98,12 +110,6 @@ void Map::generate_solution_path() {
       mvwaddch(this->screen->window, next_room.start_y, next_room.start_x, next_room.type);
     }
   }
-
-#if DEBUG == 1
-  endwin();
-  for (auto &room : this->rooms)
-    std::cout << room << std::endl;
-#endif
 }
 
 std::string *Map::get_available_moves(Room *last_room) {
@@ -135,10 +141,10 @@ void Map::replace_solution_path() {
       const char room_type = mvwinch(this->screen->window, start_y, start_x) & A_CHARTEXT;
       const std::vector<std::string> *rooms = nullptr;
 
-      if (room_type == CORRIDOR_ROOM_CODE) rooms = &CORRIDOR_ROOMS;
-      if (room_type == DROP_ROOM_CODE) rooms = &DROP_ROOMS;
-      if (room_type == LANDING_ROOM_CODE) rooms = &LANDING_ROOMS;
-      if (room_type == OPEN_ROOM_CODE) rooms = &OPEN_ROOMS;
+      if (room_type == CORRIDOR_ROOM_CODE) rooms = &Constants::Rooms::CORRIDOR;
+      if (room_type == DROP_ROOM_CODE) rooms = &Constants::Rooms::DROP;
+      if (room_type == LANDING_ROOM_CODE) rooms = &Constants::Rooms::LANDING;
+      if (room_type == OPEN_ROOM_CODE) rooms = &Constants::Rooms::OPEN;
 
       this->add_room(start_x, start_y, rooms);
     }
