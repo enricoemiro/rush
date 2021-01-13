@@ -86,11 +86,14 @@ void Map::generate_solution_path() {
   // If there are two consecutive rooms of type 2,
   // the type of the second one is replaced with 4
   for (auto &current_room : this->rooms) {
-    auto next_room = *(&current_room + 1);
+    if (&current_room == last_room) break;
 
-    if ((current_room.type == DROP_ROOM_CODE ||
-         current_room.type == OPEN_ROOM_CODE) &&
-        next_room.type == DROP_ROOM_CODE) {
+    auto next_room = *(&current_room + 1);
+    const bool two_drop_rooms_in_row = (current_room.type == DROP_ROOM_CODE ||
+                                        current_room.type == OPEN_ROOM_CODE) &&
+                                       next_room.type == DROP_ROOM_CODE;
+
+    if (two_drop_rooms_in_row) {
       next_room.type = OPEN_ROOM_CODE;
       mvwaddch(this->screen->window, next_room.start_y, next_room.start_x, next_room.type);
     }
