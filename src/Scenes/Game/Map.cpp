@@ -17,10 +17,6 @@ Map::Map(Screen *screen, Grid *grid) : Scene(screen) {
   this->grids_per_height = this->screen->height / this->grid->height;
 }
 
-Map::~Map() {
-  if (this->grid) delete this->grid;
-}
-
 void Map::draw() {
   this->draw_edges();
   this->generate_solution_path();

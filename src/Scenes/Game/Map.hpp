@@ -80,7 +80,6 @@ class Map : public Scene {
 
  public:
   Map(Screen *screen, Grid *grid);
-  ~Map();
   void draw();
 };
 
