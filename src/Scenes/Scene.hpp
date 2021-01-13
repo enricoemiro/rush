@@ -18,6 +18,13 @@ struct Screen {
                         start_x(start_x),
                         start_y(start_y),
                         window(newwin(height + 2, width + 2, start_y, start_x)) {}
+
+  ~Screen() {
+    if (this->window) {
+      delwin(this->window);
+      this->window = nullptr;
+    }
+  }
 };
 
 class Scene {
@@ -28,7 +35,6 @@ class Scene {
 
  public:
   Scene(Screen *);
-  ~Scene();
   void draw();
 };
 
