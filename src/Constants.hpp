@@ -5,8 +5,7 @@
 #include <string>
 #include <vector>
 
-class Constants {
- public:
+struct Constants {
   struct Rooms {
     static const std::vector<std::string> CORRIDOR;
     static const std::vector<std::string> DROP;
