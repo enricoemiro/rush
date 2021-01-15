@@ -1,16 +1,13 @@
 #include "Levels.hpp"
 
-Level::Level()
-    : value(1),
-      map(nullptr),
-      prev(nullptr),
-      next(nullptr) {}
+namespace Rush {
 
-Levels::Levels(Screen *screen, Grid *grid)
-    : screen(screen),
-      grid(grid),
+Levels::Levels(const Screen &map_screen,
+               const Grid &map_grid)
+    : map_screen(map_screen),
+      map_grid(map_grid),
       head(nullptr) {
-  this->insert_at_head();
+  this->prepend();
 }
 
 Levels::~Levels() {
@@ -20,7 +17,6 @@ Levels::~Levels() {
 
     while (curr) {
       next = curr->next;
-      if (curr->map) delete curr->map;
       delete curr;
       curr = next;
     }
@@ -29,15 +25,13 @@ Levels::~Levels() {
   }
 }
 
-void Levels::insert_at_head() {
-  Level *new_level = new Level;
-  new_level->map = new Map(this->screen, this->grid);
-  new_level->prev = nullptr;
+void Levels::prepend() {
+  Level *new_level = new Level(
+      this->head ? this->head->value + 1 : 1,
+      this->map_screen,
+      this->map_grid);
 
-  if (!this->head) {
-    new_level->value = 1;
-  } else {
-    new_level->value = this->head->value + 1;
+  if (this->head) {
     new_level->next = this->head;
     this->head->prev = new_level;
   }
@@ -45,24 +39,24 @@ void Levels::insert_at_head() {
   this->head = new_level;
 }
 
-Level *Levels::prev_level() {
-  if (this->head->next != nullptr)
+Level &Levels::get_prev() {
+  if (this->head->next)
     this->head = this->head->next;
 
-  return this->curr_level();
+  return this->get_curr();
 }
 
-Level *Levels::curr_level() {
-  return this->head;
+Level &Levels::get_curr() {
+  return *this->head;
 }
 
-Level *Levels::next_level() {
-  if (this->head->prev == nullptr)
-    this->insert_at_head();
+Level &Levels::get_next() {
+  if (!this->head->prev)
+    this->prepend();
   else
     this->head = this->head->prev;
 
-  return this->curr_level();
+  return this->get_curr();
 }
 
 #if DEBUG == 1
@@ -83,3 +77,5 @@ void Levels::print() {
   }
 }
 #endif
+
+}  // namespace Rush

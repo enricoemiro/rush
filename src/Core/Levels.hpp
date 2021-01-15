@@ -3,30 +3,27 @@
 
 #include "../Scenes/Game/Map.hpp"
 #include "Struct/Grid.hpp"
+#include "Struct/Level.hpp"
 #include "Struct/Screen.hpp"
 
-struct Level {
-  int value;
-  Map *map;
-  Level *prev;
-  Level *next;
-
-  Level();
-};
+namespace Rush {
 
 class Levels {
+ private:
+  Screen map_screen;
+  Grid map_grid;
+
  protected:
-  Screen *screen;
-  Grid *grid;
   Level *head;
-  void insert_at_head();
+  void prepend();
 
  public:
-  Levels(Screen *screen, Grid *grid);
+  Levels(const Screen &map_screen,
+         const Grid &map_grid);
   ~Levels();
-  Level *prev_level();
-  Level *curr_level();
-  Level *next_level();
+  Level &get_prev();
+  Level &get_curr();
+  Level &get_next();
 
 #if DEBUG == 1
   void print();
@@ -34,3 +31,5 @@ class Levels {
 };
 
 #endif
+
+}  // namespace Rush

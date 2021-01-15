@@ -1,5 +1,7 @@
 #include "Constants.hpp"
 
+namespace Rush {
+
 const std::vector<std::string> Constants::Rooms::CORRIDOR = {
     "2222222222"
     "2222222222"
@@ -79,3 +81,27 @@ const std::vector<std::string> Constants::Rooms::OPEN = {
     "0222002220"
     "1222002221",
 };
+
+const std::vector<std::string> Constants::Rooms::SPAWN = {
+    "2222222222"
+    "2222222222"
+    "2222222222"
+    "22200S0222"
+    "2220110222"
+    "2220000222"
+    "0000220000"
+    "1111111111",
+};
+
+const std::vector<std::string> Constants::Rooms::EXIT = {
+    "0000000000"
+    "0222222220"
+    "0202002020"
+    "0222222220"
+    "0020000200"
+    "0022222200"
+    "00000E0000"
+    "1111111111",
+};
+
+}

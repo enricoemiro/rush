@@ -3,14 +3,22 @@
 
 #include <ncurses.h>
 
+#include "./Coordinate.hpp"
+#include "./Grid.hpp"
+
+namespace Rush {
+
 struct Screen {
-  int width, height,
-      start_x, start_y;
+  Grid size;
+  Coordinate start;
   WINDOW *window;
 
-  Screen(int width, int height,
-         int start_x, int start_y);
+  Screen(const Grid &size,
+         const Coordinate &start);
+  Screen(const Screen &other);
   ~Screen();
 };
+
+}  // namespace Rush
 
 #endif

@@ -1,14 +1,17 @@
 #include "Screen.hpp"
 
-Screen::Screen(int width,
-               int height,
-               int start_x,
-               int start_y)
-    : width(width),
-      height(height),
-      start_x(start_x),
-      start_y(start_y),
-      window(newwin(height + 2, width + 2, start_y, start_x)) {}
+namespace Rush {
+
+Screen::Screen(const Grid &size,
+               const Coordinate &start)
+    : size(size),
+      start(start),
+      window(newwin(size.height + 2, size.width + 2, start.y, start.x)) {}
+
+Screen::Screen(const Screen &other)
+    : size(other.size),
+      start(other.start),
+      window(newwin(other.size.height + 2, other.size.width + 2, other.start.y, other.start.x)) {}
 
 Screen::~Screen() {
   if (this->window) {
@@ -16,3 +19,5 @@ Screen::~Screen() {
     this->window = nullptr;
   }
 }
+
+}  // namespace Rush

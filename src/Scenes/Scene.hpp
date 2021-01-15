@@ -5,15 +5,19 @@
 
 #include "../Core/Struct/Screen.hpp"
 
+namespace Rush {
+
 class Scene {
  protected:
-  Screen *screen;
+  Screen screen;
   void refresh();
   void draw_edges();
 
  public:
-  Scene(Screen *);
+  Scene(const Screen &screen);
   void draw();
 };
+
+}  // namespace Rush
 
 #endif
