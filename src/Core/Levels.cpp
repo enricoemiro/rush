@@ -2,6 +2,11 @@
 
 namespace Rush {
 
+Levels::Levels(const Levels &other)
+    : map_screen(other.map_screen),
+      map_grid(other.map_grid),
+      head(other.head) {}
+
 Levels::Levels(const Screen &map_screen,
                const Grid &map_grid)
     : map_screen(map_screen),

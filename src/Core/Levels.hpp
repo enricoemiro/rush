@@ -18,6 +18,7 @@ class Levels {
   void prepend();
 
  public:
+  Levels(const Levels &other);
   Levels(const Screen &map_screen,
          const Grid &map_grid);
   ~Levels();
@@ -30,6 +31,6 @@ class Levels {
 #endif
 };
 
-#endif
-
 }  // namespace Rush
+
+#endif
