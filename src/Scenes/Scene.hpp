@@ -16,6 +16,7 @@ class Scene {
  public:
   Scene(const Screen &screen);
   void draw();
+  WINDOW *get_screen_window();
 };
 
 }  // namespace Rush

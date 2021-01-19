@@ -26,4 +26,8 @@ void Scene::draw() {
   this->refresh();
 }
 
+WINDOW *Scene::get_screen_window() {
+  return this->screen.window;
+}
+
 }  // namespace Rush
