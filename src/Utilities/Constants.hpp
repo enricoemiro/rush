@@ -13,8 +13,12 @@ struct Constants {
     static const std::vector<std::string> DROP;
     static const std::vector<std::string> LANDING;
     static const std::vector<std::string> OPEN;
-    static const std::vector<std::string> SPAWN;
-    static const std::vector<std::string> EXIT;
+
+    // Special rooms
+    static const std::vector<std::string> SPAWN_CORRIDOR;
+    static const std::vector<std::string> SPAWN_DROP;
+    static const std::vector<std::string> EXIT_CORRIDOR;
+    static const std::vector<std::string> EXIT_LANDING;
   };
 };
 

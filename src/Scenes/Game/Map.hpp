@@ -17,12 +17,14 @@
 namespace Rush {
 
 class Map : public Scene {
-  static const char CORRIDOR_ROOM_CODE = '1';
-  static const char DROP_ROOM_CODE = '2';
-  static const char LANDING_ROOM_CODE = '3';
-  static const char OPEN_ROOM_CODE = '4';
-  static const char SPAWN_ROOM_CODE = 'S';
-  static const char EXIT_ROOM_CODE = 'E';
+  static const char CORRIDOR_ROOM_CODE;
+  static const char DROP_ROOM_CODE;
+  static const char LANDING_ROOM_CODE;
+  static const char OPEN_ROOM_CODE;
+  static const char SPAWN_CORRIDOR_ROOM_CODE;
+  static const char SPAWN_DROP_ROOM_CODE;
+  static const char EXIT_CORRIDOR_ROOM_CODE;
+  static const char EXIT_LANDING_ROOM_CODE;
 
  private:
   Grid grid;
@@ -32,18 +34,35 @@ class Map : public Scene {
   int number_columns;
 
   void generate_solution_path();
-  std::string *get_available_moves(const Room &last_room);
-  const bool can_move(const Coordinate &coordinate);
   void replace_solution_path();
-  void add_room(const Coordinate &start,
-                const std::vector<std::string> *rooms);
+  void add_room(const Coordinate& start, const std::vector<std::string>* rooms);
+
+  /** Helpers */
+  void print_room(const Room& room);
+  char get_character(const Coordinate& coordinate);
+
+  bool can_move(const Coordinate& coordinate);
+  std::string get_available_moves(const Room& room);
+  char get_move(const Room& room);
+  void move(Room& last_room, Room& room, char move_ch);
+  void move_right(Room& room);
+  void move_left(Room& room);
+  void move_down(Room& last_room, Room& room);
+  void update_spawn_type();
+  void update_exit_type();
+
+  void add_rooms(int row);
+  const std::vector<std::string>* get_rooms(char room_type);
+  const std::string* get_room(const std::vector<std::string>* rooms);
+  /***********/
 
  public:
-  Map(const Screen &screen,
-      const Grid &grid);
+  Map(const Screen& screen, const Grid& grid);
   void draw();
-  const Coordinate &get_spawn();
-  const Coordinate &get_exit();
+
+  // Getters
+  const Coordinate& get_spawn();
+  const Coordinate& get_exit();
 };
 
 }  // namespace Rush
