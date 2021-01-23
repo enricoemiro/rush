@@ -4,12 +4,10 @@
 namespace Rush {
 
 struct Grid {
-  int width,
-      height;
+  int width, height;
 
-  Grid(int width,
-       int height);
-  Grid(const Grid &other);
+  Grid(int width, int height);
+  Grid(const Grid& other);
 };
 
 }  // namespace Rush

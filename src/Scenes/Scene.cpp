@@ -2,19 +2,11 @@
 
 namespace Rush {
 
-Scene::Scene(const Screen &screen)
-    : screen(screen) {}
+Scene::Scene(const Screen& screen) : screen(screen) {}
 
 void Scene::draw_edges() {
-  wborder(this->screen.window,
-          ACS_VLINE,
-          ACS_VLINE,
-          ACS_HLINE,
-          ACS_HLINE,
-          ACS_ULCORNER,
-          ACS_URCORNER,
-          ACS_LLCORNER,
-          ACS_LRCORNER);
+  wborder(this->screen.window, ACS_VLINE, ACS_VLINE, ACS_HLINE, ACS_HLINE,
+          ACS_ULCORNER, ACS_URCORNER, ACS_LLCORNER, ACS_LRCORNER);
 }
 
 void Scene::refresh() {
@@ -26,7 +18,7 @@ void Scene::draw() {
   this->refresh();
 }
 
-WINDOW *Scene::get_screen_window() {
+WINDOW* Scene::get_screen_window() {
   return this->screen.window;
 }
 

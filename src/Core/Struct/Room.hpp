@@ -9,8 +9,7 @@ struct Room {
   char type;
   Coordinate start;
 
-  Room(char type,
-       const Coordinate &start);
+  Room(char type, const Coordinate& start);
 };
 
 }  // namespace Rush

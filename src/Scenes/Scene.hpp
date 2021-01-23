@@ -14,9 +14,9 @@ class Scene {
   void draw_edges();
 
  public:
-  Scene(const Screen &screen);
+  Scene(const Screen& screen);
   void draw();
-  WINDOW *get_screen_window();
+  WINDOW* get_screen_window();
 };
 
 }  // namespace Rush

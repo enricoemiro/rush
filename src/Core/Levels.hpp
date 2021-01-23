@@ -14,17 +14,16 @@ class Levels {
   Grid map_grid;
 
  protected:
-  Level *head;
+  Level* head;
   void prepend();
 
  public:
-  Levels(const Levels &other);
-  Levels(const Screen &map_screen,
-         const Grid &map_grid);
+  Levels(const Levels& other);
+  Levels(const Screen& map_screen, const Grid& map_grid);
   ~Levels();
-  Level &get_prev();
-  Level &get_curr();
-  Level &get_next();
+  Level& get_prev();
+  Level& get_curr();
+  Level& get_next();
 
 #if DEBUG == 1
   void print();

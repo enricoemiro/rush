@@ -10,7 +10,7 @@ namespace Rush {
 
 class Player {
  private:
-  WINDOW *map_window;
+  WINDOW* map_window;
 
  protected:
   char symbol;
@@ -18,8 +18,7 @@ class Player {
   Coordinate previous;
 
  protected:
-  void jump(const Coordinate &next,
-            bool &has_jumped);
+  void jump(const Coordinate& next, bool& has_jumped);
   void jump_up();
   void jump_down();
 
@@ -28,9 +27,9 @@ class Player {
   void move(int key_pressed);
   void draw();
 
-  const Coordinate &get_coordinate();
-  void set_coordinate(const Coordinate &coordinate);
-  void set_window(WINDOW *map_window);
+  const Coordinate& get_coordinate();
+  void set_coordinate(const Coordinate& coordinate);
+  void set_window(WINDOW* map_window);
 };
 
 }  // namespace Rush

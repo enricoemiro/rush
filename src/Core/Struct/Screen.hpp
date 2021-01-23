@@ -11,11 +11,10 @@ namespace Rush {
 struct Screen {
   Grid size;
   Coordinate start;
-  WINDOW *window;
+  WINDOW* window;
 
-  Screen(const Grid &size,
-         const Coordinate &start);
-  Screen(const Screen &other);
+  Screen(const Grid& size, const Coordinate& start);
+  Screen(const Screen& other);
   ~Screen();
 };
 

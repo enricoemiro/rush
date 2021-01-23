@@ -7,7 +7,7 @@ struct Coordinate {
   int x, y;
 
   Coordinate(int x, int y);
-  Coordinate(const Coordinate &other);
+  Coordinate(const Coordinate& other);
 };
 
 }  // namespace Rush
