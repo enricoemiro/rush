@@ -8,16 +8,15 @@ namespace Rush {
 
 class Game {
  private:
-  Levels levels;
-  Player player;
+  Levels* levels;
+  Player* player;
   int lives;
   int score;
   bool is_over;
 
  public:
-  Game(const Levels &levels,
-       const Player &player,
-       int lives);
+  Game();
+  ~Game();
   void run();
 };
 

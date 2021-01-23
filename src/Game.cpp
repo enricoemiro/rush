@@ -2,38 +2,27 @@
 
 namespace Rush {
 
-Game::Game(const Levels &levels,
-           const Player &player,
-           int lives)
-    : levels(levels),
-      player(player),
-      lives(lives),
-      score(0),
-      is_over(false) {}
+Game::Game() : lives(3), score(0), is_over(false) {
+  this->player = new Player('&');
+  this->levels =
+      new Levels(Screen(Grid(40, 32), Coordinate(0, 0)), Grid(10, 8));
+}
+
+Game::~Game() {
+  delete this->player;
+  delete this->levels;
+}
 
 void Game::run() {
-  Map *map = &this->levels.get_curr().map;
-  const Coordinate *spawn = &map->get_spawn();
-  const Coordinate *exit = &map->get_exit();
-  WINDOW *window = map->get_screen_window();
+  Level* level = &this->levels->get_curr();
 
-  map->draw();
-  player.set_coordinate(*spawn);
-  player.set_window(window);
+  level->map.draw();
+  this->player->set_coordinate(level->map.get_spawn());
+  this->player->set_window(level->map.get_screen_window());
 
-  while (!is_over) {
-    player.draw();
-    player.move(getch());
-
-    if (player.get_coordinate().x == spawn->x &&
-        player.get_coordinate().y == spawn->y) {
-      map = &this->levels.get_next().map;
-      map->draw();
-      spawn = &map->get_spawn();
-      exit = &map->get_exit();
-
-      player.set_coordinate(*spawn);
-    }
+  while (!this->is_over) {
+    this->player->draw();
+    this->player->move(getch());
   }
 }
 
