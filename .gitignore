@@ -1,3 +1,5 @@
 # Excludes object files
-obj
+*.o
+*.d
 game
+.vscode

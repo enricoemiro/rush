@@ -1,35 +1,33 @@
-CC=g++
-SRC=src
-OBJ=obj
-CPPFLAGS=-g -Wall
-LDLIBS=-lncurses
+# Name of the executable file
+TARGET := game
 
-# Find all .cpp files
-SRCS=$(shell find -name '*.cpp')
+# Tool chain arguments
+CXXFLAGS := -Wall -Wextra
+LDLIBS := -lncurses
 
-# Replace .cpp with .o
-OBJS=$(patsubst $(SRC)/%.cpp, $(OBJ)/%.o, $(SRCS))
+# Project sources
+SOURCE_FILES := $(shell find -name '*.cpp')
+OBJECT_FILES := $(patsubst %.cpp, %.o, $(SOURCE_FILES))
 
-# Name of the binary file to generate
-BIN=game
+# The dependency file names
+DEPS := $(OBJECT_FILES:.o=.d)
 
-# Default command
-all: $(OBJ) $(BIN)
+# Create the executable file
+$(TARGET): $(OBJECT_FILES)
+	$(CXX) $(CXXFLAGS) -o $@ $(OBJECT_FILES) $(LDLIBS)
 
-# Create the executable
-$(BIN): $(OBJS)
-	$(CC) $(CPPFLAGS) -o $@ $(OBJS) $(LDLIBS)
+# Let make read the dependency files and handle them
+-include $(DEPS)
 
-# Create object files
-$(OBJ)/%.o: $(SRC)/%.cpp
-	$(CC) $(CPPFLAGS) -c $< -o $@
+# Generate object files
+%.o: %.cpp
+	$(CXX)  $(CXXFLAGS) -MMD -MP -c $< -o $@
 
-# If it doesn't exist make the object folder
-$(OBJ):
-	mkdir -p $@
+.PHONY: all rebuild clean
 
-# Delete all generated files
+all: $(TARGET)
+
+rebuild: clean all
+
 clean:
-	rm -rf $(OBJ) $(BIN)
-
-.PHONY: all clean $(OBJ)
+	$(RM) $(OBJECT_FILES) $(DEPS) $(TARGET)
