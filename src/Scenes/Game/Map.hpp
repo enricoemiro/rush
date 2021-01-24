@@ -52,8 +52,8 @@ class Map : public Scene {
   void update_exit_type();
 
   void add_rooms(int row);
-  const std::vector<std::string>* get_rooms(char room_type);
-  const std::string* get_room(const std::vector<std::string>* rooms);
+  const std::vector<std::string>* get_room_templates(char room_type);
+  const std::string* get_room_template(const std::vector<std::string>* rooms);
   /***********/
 
  public:
@@ -63,6 +63,7 @@ class Map : public Scene {
   // Getters
   const Coordinate& get_spawn();
   const Coordinate& get_exit();
+  const std::vector<Room>& get_rooms_vector();
 };
 
 }  // namespace Rush

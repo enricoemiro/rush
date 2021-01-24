@@ -165,7 +165,7 @@ void Map::update_exit_type() {
   this->print_room(this->rooms.back());
 }
 
-const std::vector<std::string>* Map::get_rooms(char room_type) {
+const std::vector<std::string>* Map::get_room_templates(char room_type) {
   switch (room_type) {
     case this->CORRIDOR_ROOM_CODE:
       return &Constants::Rooms::CORRIDOR;
@@ -196,7 +196,8 @@ const std::vector<std::string>* Map::get_rooms(char room_type) {
   }
 }
 
-const std::string* Map::get_room(const std::vector<std::string>* rooms) {
+const std::string* Map::get_room_template(
+    const std::vector<std::string>* rooms) {
   if (rooms)
     return &rooms->at(rand() % rooms->size());
 
@@ -209,7 +210,7 @@ void Map::add_rooms(int row) {
                                      row * this->grid.height + 1);
 
     const char room_type = this->get_character(room_coordinate);
-    const std::vector<std::string>* rooms = this->get_rooms(room_type);
+    const std::vector<std::string>* rooms = this->get_room_templates(room_type);
 
     this->add_room(room_coordinate, rooms);
   }
@@ -222,7 +223,7 @@ void Map::replace_solution_path() {
 
 void Map::add_room(const Coordinate& start,
                    const std::vector<std::string>* rooms) {
-  const std::string* room = this->get_room(rooms);
+  const std::string* room = this->get_room_template(rooms);
   unsigned int counter_room = 0;
 
   for (int i = start.y; i < start.y + this->grid.height; ++i) {
@@ -251,6 +252,10 @@ const Coordinate& Map::get_spawn() {
 
 const Coordinate& Map::get_exit() {
   return this->spawn_exit.back();
+}
+
+const std::vector<Room>& Map::get_rooms_vector() {
+  return this->rooms;
 }
 
 }  // namespace Rush
