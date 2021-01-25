@@ -49,7 +49,7 @@ void Map::generate_solution_path() {
   // Place the spawn room in the top row
   this->rooms.push_back(
       {this->CORRIDOR_ROOM_CODE,
-       Coordinate(rand() % this->number_columns * this->grid.width + 1, 1)});
+       {rand() % this->number_columns * this->grid.width + 1, 1}});
 
   this->print_room(this->rooms.front());
 
@@ -109,10 +109,10 @@ bool Map::can_move(const Coordinate& coordinate) {
 std::string Map::get_available_moves(const Room& room) {
   std::string moves("D");
 
-  if (can_move(Coordinate(room.start.x - this->grid.width, room.start.y)))
+  if (can_move({room.start.x - this->grid.width, room.start.y}))
     moves.append(1, 'L');
 
-  if (can_move(Coordinate(room.start.x + this->grid.width, room.start.y)))
+  if (can_move({room.start.x + this->grid.width, room.start.y}))
     moves.append(1, 'R');
 
   return moves;
@@ -198,7 +198,7 @@ const std::vector<std::string>* Map::get_room_templates(char room_type) {
 
 const std::string* Map::get_room_template(
     const std::vector<std::string>* rooms) {
-  if (rooms)
+  if (rooms && rooms->size() != 0)
     return &rooms->at(rand() % rooms->size());
 
   return nullptr;
@@ -238,6 +238,8 @@ void Map::add_room(const Coordinate& start,
         if (ch == '1') ch = '=';
         if (ch == '2') ch = rand() % 100 <= 70 ? ' ' : '=';
         if (ch == 'S' || ch == 'E') this->spawn_exit.emplace_back(j, i);
+				if (ch == 'B') ch = rand() % 100 <= 30 ? 'B' : ' ';
+				if (ch == 'L') ch = rand() % 100 <= 20 ? 'L' : ' ';
         // clang-format on
       }
 
