@@ -8,6 +8,7 @@ int main() {
   initscr();
   cbreak();
   noecho();
+  nodelay(stdscr, true);
   keypad(stdscr, true);
   wrefresh(stdscr);
 
