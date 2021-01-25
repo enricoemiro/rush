@@ -246,16 +246,20 @@ void Map::add_room(const Coordinate& start,
   }
 }
 
-const Coordinate& Map::get_spawn() {
+const Coordinate& Map::get_spawn() const {
   return this->spawn_exit.front();
 }
 
-const Coordinate& Map::get_exit() {
+const Coordinate& Map::get_exit() const {
   return this->spawn_exit.back();
 }
 
-const std::vector<Room>& Map::get_rooms_vector() {
+const std::vector<Room>& Map::get_rooms_vector() const {
   return this->rooms;
+}
+
+const Grid& Map::get_grid() const {
+  return this->grid;
 }
 
 }  // namespace Rush

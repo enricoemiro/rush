@@ -61,9 +61,10 @@ class Map : public Scene {
   void draw();
 
   // Getters
-  const Coordinate& get_spawn();
-  const Coordinate& get_exit();
-  const std::vector<Room>& get_rooms_vector();
+  const Coordinate& get_spawn() const;
+  const Coordinate& get_exit() const;
+  const std::vector<Room>& get_rooms_vector() const;
+  const Grid& get_grid() const;
 };
 
 }  // namespace Rush
