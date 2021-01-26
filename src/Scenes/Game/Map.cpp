@@ -158,9 +158,13 @@ void Map::update_spawn_type() {
 }
 
 void Map::update_exit_type() {
-  this->rooms.back().type = this->rooms.back().type == this->CORRIDOR_ROOM_CODE
-                                ? this->EXIT_CORRIDOR_ROOM_CODE
-                                : this->EXIT_LANDING_ROOM_CODE;
+  char penultimate_room_type = this->rooms[this->rooms.size() - 2].type;
+
+  this->rooms.back().type =
+      (penultimate_room_type == this->CORRIDOR_ROOM_CODE ||
+       penultimate_room_type == this->LANDING_ROOM_CODE)
+          ? this->EXIT_CORRIDOR_ROOM_CODE
+          : this->EXIT_LANDING_ROOM_CODE;
 
   this->print_room(this->rooms.back());
 }
@@ -236,7 +240,7 @@ void Map::add_room(const Coordinate& start,
         // clang-format off
         if (ch == '0') ch = ' ';
         if (ch == '1') ch = '=';
-        if (ch == '2') ch = rand() % 100 <= 70 ? ' ' : '=';
+        if (ch == '2') ch = rand() % 100 <= 60 ? ' ' : '=';
         if (ch == 'S' || ch == 'E') this->spawn_exit.emplace_back(j, i);
 				if (ch == 'B') ch = rand() % 100 <= 30 ? 'B' : ' ';
 				if (ch == 'L') ch = rand() % 100 <= 20 ? 'L' : ' ';
