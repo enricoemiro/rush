@@ -10,17 +10,23 @@ namespace Rush {
 
 class Player {
  private:
-  WINDOW* map_window;
-
- protected:
   char symbol;
+  WINDOW* map_window;
   Coordinate current;
   Coordinate previous;
-
- protected:
-  void jump(const Coordinate& next, bool& has_jumped);
+  void jump(const Coordinate& coordinate, bool& has_jumped);
   void jump_up();
   void jump_down();
+
+  /** Helpers */
+  char get_character(const Coordinate& coordinate);
+  bool is_flying(const Coordinate& coordinate);
+  bool is_right_edge(const Coordinate& coordinate);
+  bool is_left_edge(const Coordinate& coordinate);
+  bool is_block(const Coordinate& coordinate);
+  bool is_double_block(const Coordinate& coordinate);
+  bool is_wall(const Coordinate& coordinate);
+  /***********/
 
  public:
   Player(char symbol);

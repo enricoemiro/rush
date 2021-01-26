@@ -26,8 +26,10 @@ void Game::run() {
   this->player->set_window(level->map.get_screen_window());
 
   while (!this->is_over) {
+    int key_pressed = getch();
+
     this->player->draw();
-    this->player->move(getch());
+    this->player->move(key_pressed);
   }
 }
 
