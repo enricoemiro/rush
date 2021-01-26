@@ -18,5 +18,5 @@ int main() {
   delwin(stdscr);
   endwin();
 
-  return EXIT_FAILURE;
+  return EXIT_SUCCESS;
 }
