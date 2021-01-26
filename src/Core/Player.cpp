@@ -2,8 +2,9 @@
 
 namespace Rush {
 
-Player::Player(char symbol)
-    : symbol(symbol),
+Player::Player(Status* status, char symbol)
+    : status(status),
+      symbol(symbol),
       map_window(nullptr),
       current({-1, -1}),
       previous({-1, -1}) {}
@@ -17,8 +18,10 @@ void Player::jump(const Coordinate& coordinate, bool& has_jumped) {
     has_jumped = true;
 
   if (this->is_block(coordinate) &&
-      !this->is_block({coordinate.x, coordinate.y - 1}))
+      !this->is_block({coordinate.x, coordinate.y - 1})) {
     this->current.y = coordinate.y - 1;
+    this->collision(this->current);
+  }
 }
 
 void Player::jump_up() {
@@ -34,6 +37,16 @@ void Player::jump_down() {
   for (int i = this->current.y + 2;
        i < getmaxy(this->map_window) - 1 && !has_jumped; ++i)
     this->jump({this->current.x, i}, has_jumped);
+}
+
+void Player::collision(const Coordinate& coordinate) {
+  const char hitted_char = this->get_character(coordinate);
+
+  // clang-format off
+	if (hitted_char == 'B') this->status->increment_score(10);
+  if (hitted_char == 'L') this->status->increment_lives();
+	if (hitted_char == 'M' || hitted_char == 'T') this->status->decrement_lives();
+  // clang-format on
 }
 
 bool Player::is_flying(const Coordinate& coordinate) {
@@ -98,6 +111,9 @@ void Player::move(int key_pressed) {
     // ====    ====
     if (is_flying(this->current))
       this->jump_down();
+
+    // Check for collision
+    this->collision(this->current);
   }
 }
 

@@ -4,12 +4,14 @@
 #include <ncurses.h>
 
 #include "../Scenes/Game/Map.hpp"
+#include "../Scenes/Game/Status.hpp"
 #include "Struct/Coordinate.hpp"
 
 namespace Rush {
 
 class Player {
  private:
+  Status* status;
   char symbol;
   WINDOW* map_window;
   Coordinate current;
@@ -17,6 +19,7 @@ class Player {
   void jump(const Coordinate& coordinate, bool& has_jumped);
   void jump_up();
   void jump_down();
+  void collision(const Coordinate& coordinate);
 
   /** Helpers */
   char get_character(const Coordinate& coordinate);
@@ -29,7 +32,7 @@ class Player {
   /***********/
 
  public:
-  Player(char symbol);
+  Player(Status* status, char symbol);
   void move(int key_pressed);
   void draw();
 

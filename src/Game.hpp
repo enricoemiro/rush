@@ -12,9 +12,6 @@ class Game {
   Levels* levels;
   Player* player;
   Status* status;
-  int lives;
-  int score;
-  bool is_over;
 
  public:
   Game();
