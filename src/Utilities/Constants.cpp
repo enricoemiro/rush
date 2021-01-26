@@ -15,8 +15,8 @@ const std::vector<std::string> Constants::Rooms::CORRIDOR = {
     "2222222222"
     "2222222222"
     "2222222222"
+    "0000000000"
     "0000LL0000"
-    "0002222000"
     "0011111100"
     "0122222210"
     "1111111111",
@@ -84,24 +84,24 @@ const std::vector<std::string> Constants::Rooms::OPEN = {
 
 const std::vector<std::string> Constants::Rooms::SPAWN_CORRIDOR = {
     "2222222222"
-    "22200S0022"
-    "2220111022"
-    "2220121022"
-    "2220212022"
-    "2220121022"
-    "0000BLB000"
+    "2222222222"
+    "20L2222L02"
+    "2012222102"
+    "0002222000"
+    "0222222220"
+    "00000S0000"
     "1111111111",
 };
 
 const std::vector<std::string> Constants::Rooms::SPAWN_DROP = {
     "2222222222"
-    "2222222222"
-    "22000S0022"
-    "2201111022"
-    "2200000022"
-    "2201111022"
-    "000B00B000"
-    "1111001111",
+    "0222222220"
+    "0022222200"
+    "0002222000"
+    "0000LL0000"
+    "0001111000"
+    "S000000100"
+    "1111000111",
 };
 
 const std::vector<std::string> Constants::Rooms::EXIT_CORRIDOR = {
@@ -117,12 +117,12 @@ const std::vector<std::string> Constants::Rooms::EXIT_CORRIDOR = {
 
 const std::vector<std::string> Constants::Rooms::EXIT_LANDING = {
     "0000000000"
-    "2202112022"
-    "2200000022"
-    "2201221022"
-    "2200BB0022"
-    "2202112022"
-    "00000E0000"
+    "0111221110"
+    "0000000000"
+    "0022222200"
+    "0000000000"
+    "0200000020"
+    "1110LE0111"
     "1111111111",
 };
 
