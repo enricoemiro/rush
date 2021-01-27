@@ -2,12 +2,18 @@
 
 namespace Rush {
 
+// Bullet struct
+Player::Bullet::Bullet(char direction, const Coordinate& current)
+    : direction(direction), current(current), previous({-1, -1}) {}
+
 Player::Player(Status* status, char symbol)
     : status(status),
       symbol(symbol),
       map_window(nullptr),
       current({-1, -1}),
-      previous({-1, -1}) {}
+      previous({-1, -1}) {
+  this->bullets.reserve(4);
+}
 
 char Player::get_character(const Coordinate& coordinate) {
   return mvwinch(this->map_window, coordinate.y, coordinate.x) & A_CHARTEXT;
@@ -123,6 +129,77 @@ void Player::move(int key_pressed) {
 
     // Check for collision
     this->collision(this->current);
+  }
+}
+
+void Player::shoot(int key_pressed) {
+  // Keys:
+  // Ww = 87/119
+  // Aa = 65/97
+  // Ss = 83/115
+  // Dd = 68/100
+  if ((key_pressed != 87 && key_pressed != 119 && key_pressed != 65 &&
+       key_pressed != 97 && key_pressed != 83 && key_pressed != 115 &&
+       key_pressed != 68 && key_pressed != 100) ||
+      this->bullets.size() >= 4)
+    return;
+
+  char direction;
+
+  // Shoot top
+  if (key_pressed == 87 || key_pressed == 119)
+    direction = 'W';
+
+  // Shoot left
+  if (key_pressed == 65 || key_pressed == 97)
+    direction = 'A';
+
+  // Shoot down
+  if (key_pressed == 83 || key_pressed == 115)
+    direction = 'S';
+
+  // Shoot right
+  if (key_pressed == 68 || key_pressed == 100)
+    direction = 'D';
+
+  this->bullets.emplace_back(direction, this->current);
+}
+
+void Player::update_bullets() {
+  for (size_t i = 0; i < this->bullets.size(); ++i) {
+    auto bullet = &this->bullets.at(i);
+
+    // Save the previous position
+    bullet->previous = bullet->current;
+
+    // clang-format off
+    if (bullet->direction == 'W') bullet->current.y -= 1;
+    if (bullet->direction == 'A') bullet->current.x -= 1;
+    if (bullet->direction == 'S') bullet->current.y += 1;
+    if (bullet->direction == 'D') bullet->current.x += 1;
+    // clang-format on
+
+    // Check for collision
+    const char hitted_char = this->get_character(bullet->current);
+
+    if (hitted_char != ' ') {
+      if (hitted_char == 'M' || hitted_char == 'T') {
+        this->status->increment_score(20);
+        mvwaddch(this->map_window, bullet->current.y, bullet->current.x, ' ');
+      }
+
+      mvwaddch(this->map_window, bullet->previous.y, bullet->previous.x, ' ');
+      this->bullets.erase(this->bullets.begin() + i);
+    }
+  }
+}
+
+void Player::draw_bullets() {
+  this->update_bullets();
+
+  for (auto& bullet : this->bullets) {
+    mvwaddch(this->map_window, bullet.previous.y, bullet.previous.x, ' ');
+    mvwaddch(this->map_window, bullet.current.y, bullet.current.x, '*');
   }
 }
 

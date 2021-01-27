@@ -23,11 +23,19 @@ void Game::run() {
   this->player->set_coordinate(level->map.get_spawn());
   this->player->set_window(level->map.get_screen_window());
 
+  auto start = time(0);
   while (!this->status->get_is_over()) {
     int key_pressed = getch();
 
-    this->player->draw();
     this->player->move(key_pressed);
+    this->player->shoot(key_pressed);
+
+    if (time(0) - start == 1) {
+      this->player->draw_bullets();
+      start += 1;
+    }
+
+    this->player->draw();
   }
 }
 
