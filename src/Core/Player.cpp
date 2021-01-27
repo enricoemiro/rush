@@ -42,11 +42,20 @@ void Player::jump_down() {
 void Player::collision(const Coordinate& coordinate) {
   const char hitted_char = this->get_character(coordinate);
 
-  // clang-format off
-	if (hitted_char == 'B') this->status->increment_score(10);
-  if (hitted_char == 'L') this->status->increment_lives();
-	if (hitted_char == 'M' || hitted_char == 'T') this->status->decrement_lives();
-  // clang-format on
+  if (hitted_char == 'B') {
+    this->status->increment_score(10);
+    mvwaddch(this->map_window, coordinate.y, coordinate.x, ' ');
+  }
+
+  if (hitted_char == 'L') {
+    this->status->increment_lives();
+    mvwaddch(this->map_window, coordinate.y, coordinate.x, ' ');
+  }
+
+  if (hitted_char == 'M' || hitted_char == 'T') {
+    this->status->decrement_lives();
+    mvwaddch(this->map_window, coordinate.y, coordinate.x, ' ');
+  }
 }
 
 bool Player::is_flying(const Coordinate& coordinate) {
