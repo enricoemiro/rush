@@ -12,4 +12,8 @@ Coordinate& Coordinate::operator=(const Coordinate& other) {
   return *this;
 }
 
+bool Coordinate::operator==(const Coordinate& other) const {
+  return (this->x == other.x) && (this->y == other.y);
+}
+
 }  // namespace Rush
