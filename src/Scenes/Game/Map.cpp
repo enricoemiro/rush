@@ -21,7 +21,7 @@ Map::Map(const Screen& screen, const Grid& grid) : Scene(screen), grid(grid) {
   EXIT_IF_TRUE(this->screen.size.width % grid.width != 0,
                "The width of the screen must be divisible by" << grid.width);
 
-  EXIT_IF_TRUE(this->screen.size.width % grid.height != 0,
+  EXIT_IF_TRUE(this->screen.size.height % grid.height != 0,
                "The height of the screen must be divisible by " << grid.height)
 
   this->number_columns = this->screen.size.width / this->grid.width;
