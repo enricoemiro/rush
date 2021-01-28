@@ -9,12 +9,14 @@ namespace Rush {
 
 struct Level {
   int value;
-  Map map;
+  Map* map;
   Level* prev;
   Level* next;
 
   Level(int value, const Screen& map_screen, const Grid& map_grid);
 };
+
+typedef Level* Level_Ptr;
 
 }  // namespace Rush
 

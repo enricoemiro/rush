@@ -14,8 +14,8 @@ Levels::Levels(const Screen& map_screen, const Grid& map_grid)
 
 Levels::~Levels() {
   if (this->head) {
-    Level* curr = this->head;
-    Level* next = nullptr;
+    Level_Ptr curr = this->head;
+    Level_Ptr next = nullptr;
 
     while (curr) {
       next = curr->next;
@@ -28,8 +28,8 @@ Levels::~Levels() {
 }
 
 void Levels::prepend() {
-  Level* new_level = new Level(this->head ? this->head->value + 1 : 1,
-                               this->map_screen, this->map_grid);
+  Level_Ptr new_level = new Level(this->head ? this->head->value + 1 : 1,
+                                  this->map_screen, this->map_grid);
 
   if (this->head) {
     new_level->next = this->head;
@@ -39,43 +39,24 @@ void Levels::prepend() {
   this->head = new_level;
 }
 
-Level& Levels::get_prev() {
-  if (this->head->next)
+Level_Ptr Levels::get_prev() {
+  if (this->head->next != nullptr)
     this->head = this->head->next;
 
   return this->get_curr();
 }
 
-Level& Levels::get_curr() {
-  return *this->head;
+Level_Ptr Levels::get_curr() {
+  return this->head;
 }
 
-Level& Levels::get_next() {
-  if (!this->head->prev)
+Level_Ptr Levels::get_next() {
+  if (this->head->prev == nullptr)
     this->prepend();
   else
     this->head = this->head->prev;
 
   return this->get_curr();
 }
-
-#if DEBUG == 1
-void Levels::print() {
-  Level* tmp = this->head;
-
-  while (tmp) {
-    std::cout << tmp->value << " => ";
-
-    if (tmp->prev)
-      std::cout << "Next: " << tmp->prev->value << " ";
-
-    if (tmp->next)
-      std::cout << "Prev: " << tmp->next->value << " ";
-
-    std::cout << std::endl;
-    tmp = tmp->next;
-  }
-}
-#endif
 
 }  // namespace Rush

@@ -21,13 +21,9 @@ class Levels {
   Levels(const Levels& other);
   Levels(const Screen& map_screen, const Grid& map_grid);
   ~Levels();
-  Level& get_prev();
-  Level& get_curr();
-  Level& get_next();
-
-#if DEBUG == 1
-  void print();
-#endif
+  Level_Ptr get_prev();
+  Level_Ptr get_curr();
+  Level_Ptr get_next();
 };
 
 }  // namespace Rush

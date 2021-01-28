@@ -32,6 +32,7 @@ class Map : public Scene {
   std::vector<Coordinate> spawn_exit;
   int number_rows;
   int number_columns;
+	bool was_drawn;
 
   void generate_solution_path();
   void replace_solution_path();

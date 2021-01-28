@@ -26,6 +26,7 @@ Map::Map(const Screen& screen, const Grid& grid) : Scene(screen), grid(grid) {
 
   this->number_columns = this->screen.size.width / this->grid.width;
   this->number_rows = this->screen.size.height / this->grid.height;
+  this->was_drawn = false;
   this->rooms.reserve(this->number_columns * this->number_rows);
   this->spawn_exit.reserve(2);
 }
@@ -40,8 +41,11 @@ char Map::get_character(const Coordinate& coordinate) {
 
 void Map::draw() {
   this->draw_edges();
-  this->generate_solution_path();
-  this->replace_solution_path();
+  if (!this->was_drawn) {
+    this->generate_solution_path();
+    this->replace_solution_path();
+    this->was_drawn = true;
+  }
   this->refresh();
 }
 
