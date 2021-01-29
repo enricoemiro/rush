@@ -24,7 +24,8 @@ void Player::jump(const Coordinate& coordinate, bool& has_jumped) {
     has_jumped = true;
 
   if (this->is_block(coordinate) &&
-      !this->is_block({coordinate.x, coordinate.y - 1})) {
+      (!this->is_block({coordinate.x, coordinate.y - 1}) &&
+       !this->is_wall({coordinate.x, coordinate.y - 1}))) {
     this->current.y = coordinate.y - 1;
     this->collision(this->current);
   }
