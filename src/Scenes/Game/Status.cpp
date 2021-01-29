@@ -27,10 +27,11 @@ void Status::increment_lives() {
 }
 
 void Status::decrement_lives() {
+  this->lives--;
+
   if (this->lives <= 0)
     this->is_over = true;
-  else
-    this->lives--;
+
   this->draw();
 }
 
