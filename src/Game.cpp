@@ -56,6 +56,11 @@ void Game::init_level(Level_Ptr& level) {
   level->map->draw();
   this->status->set_level(level->value);
   this->player->set_window(level->map->get_screen_window());
+
+  // Set the enemies
+  level->t_enemies->set_level(level->value);
+  level->t_enemies->set_rooms(level->map->get_rooms_vector());
+  level->t_enemies->draw();
 }
 
 void Game::go_next(Level_Ptr& level) {
