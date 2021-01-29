@@ -73,7 +73,7 @@ void Game::go_prev(Level_Ptr& level) {
 void Game::draw_spawn(Level_Ptr& level) {
   const char spawn_ch = this->get_character(level, level->map->get_spawn());
 
-  if (spawn_ch != 'S')
+  if (spawn_ch != 'S' && level->value != 1)
     this->add_character(level, level->map->get_spawn(), 'S');
 }
 
