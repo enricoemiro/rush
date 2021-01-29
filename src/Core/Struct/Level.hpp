@@ -3,6 +3,7 @@
 
 #include "../../Scenes/Game/Map.hpp"
 #include "../Enemies/Enemy.hpp"
+#include "../Enemies/MEnemy.hpp"
 #include "Coordinate.hpp"
 #include "Screen.hpp"
 
@@ -12,6 +13,7 @@ struct Level {
   int value;
   Map* map;
   Enemy* t_enemies;
+  MEnemy* m_enemies;
   Level* prev;
   Level* next;
 

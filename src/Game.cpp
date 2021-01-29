@@ -44,6 +44,7 @@ void Game::run() {
 
     if (time(0) - start == 1) {
       this->player->draw_bullets();
+      level->m_enemies->update_enemies();
       start += 1;
     }
 
@@ -61,6 +62,10 @@ void Game::init_level(Level_Ptr& level) {
   level->t_enemies->set_level(level->value);
   level->t_enemies->set_rooms(level->map->get_rooms_vector());
   level->t_enemies->draw();
+  
+  level->m_enemies->set_level(level->value);
+  level->m_enemies->set_rooms(level->map->get_rooms_vector());
+  level->m_enemies->draw();
 }
 
 void Game::go_next(Level_Ptr& level) {

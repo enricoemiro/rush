@@ -8,6 +8,7 @@ Level::Level(int value,
     : value(value),
       map(new Map(map_screen, map_grid)),
       t_enemies(new Enemy(this->map->get_screen_window(), map_grid, 'T')),
+      m_enemies(new MEnemy(this->map->get_screen_window(), map_grid, 'M')),
       prev(nullptr),
       next(nullptr) {}
 

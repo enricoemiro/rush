@@ -21,7 +21,7 @@ class Enemy {
   bool was_drawn;
   void select_y(int room_index);
   void select_x(int room_index, int y_index);
-  void spawn_conditions(const Coordinate& coordinate);
+  virtual void spawn_conditions(const Coordinate& coordinate);
   char get_character(const Coordinate& coordinate);
   void print_character(const Coordinate& coordinate, const char ch);
 
