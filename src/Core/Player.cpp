@@ -230,4 +230,9 @@ void Player::set_window(WINDOW* map_window) {
   this->map_window = map_window;
 }
 
+void Player::reset_coordinates() {
+  this->current = {-1, -1};
+  this->previous = {-1, -1};
+}
+
 }  // namespace Rush

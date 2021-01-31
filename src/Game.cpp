@@ -54,6 +54,7 @@ void Game::run() {
 }
 
 void Game::init_level(Level_Ptr& level) {
+  this->player->reset_coordinates();
   level->map->draw();
   this->status->set_level(level->value);
   this->player->set_window(level->map->get_screen_window());
