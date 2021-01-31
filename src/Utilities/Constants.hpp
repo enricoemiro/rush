@@ -29,8 +29,10 @@ struct Constants {
     static const char SPACE_CHAR;
     static const char BONUS_CHAR;
     static const char LIFE_CHAR;
-    static const char TENEMY_CHAR;
-    static const char MENEMY_CHAR;
+    static const char SPAWN_CHAR;
+    static const char EXIT_CHAR;
+		static const char TENEMY_CHAR;
+		static const char MENEMY_CHAR;
   };
 };
 

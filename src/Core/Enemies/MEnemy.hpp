@@ -8,6 +8,7 @@ namespace Rush {
 
 class MEnemy : public Enemy {
  private:
+  // Single MEnemy Struct
   struct SingleEnemy {
     char direction;
     Coordinate current, previous;
@@ -23,6 +24,13 @@ class MEnemy : public Enemy {
   bool can_move_left(SingleEnemy& enemy);
   void move_right(SingleEnemy& enemy);
   bool can_move_right(SingleEnemy& enemy);
+  void erase_enemy(int index);
+  void collision(SingleEnemy& enemy, int index);
+
+  /** Helpers */
+  bool is_enemy(const char ch);
+  bool is_special(const char ch);
+  /***********/
 
  public:
   MEnemy(WINDOW* map_window, const Grid& grid, char symbol);

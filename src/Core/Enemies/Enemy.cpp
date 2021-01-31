@@ -33,15 +33,20 @@ char Enemy::get_character(const Coordinate& coordinate) {
 }
 
 void Enemy::spawn_conditions(const Coordinate& coordinate) {
-  const char ch_1 = this->get_character(Coordinate(coordinate));
-  const char ch_2 =
-      this->get_character(Coordinate(coordinate.x, coordinate.y + 1));
+  const char ch_1 = this->get_character(coordinate);
+  const char ch_2 = this->get_character({coordinate.x, coordinate.y + 1});
 
-  if (ch_1 == Constants::Game::SPACE_CHAR &&
-      (ch_2 == Constants::Game::FLOOR_CHAR ||
-       ch_2 == Constants::Game::BLOCK_CHAR) &&
-      rand() % 100 <= level * 3)
+  if (this->is_space(ch_1) && this->is_walkable(ch_2) &&
+      rand() % 100 <= level * 2)
     this->print_character(coordinate, this->symbol);
+}
+
+bool Enemy::is_space(const char ch) {
+  return ch == Constants::Game::SPACE_CHAR;
+}
+
+bool Enemy::is_walkable(const char ch) {
+  return ch == Constants::Game::FLOOR_CHAR || ch == Constants::Game::BLOCK_CHAR;
 }
 
 void Enemy::set_rooms(const std::vector<Room>& rooms) {

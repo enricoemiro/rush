@@ -6,7 +6,7 @@ Game::Game() {
   this->levels =
       new Levels(Screen(Grid(40, 32), Coordinate(0, 0)), Grid(10, 8));
   this->status = new Status(Screen(Grid(8, 3), Coordinate(42, 0)), 1, 0, 3);
-  this->player = new Player(this->status, '&');
+  this->player = new Player(this->status, Constants::Game::PLAYER_CHAR);
 }
 
 Game::~Game() {
@@ -67,6 +67,7 @@ void Game::init_level(Level_Ptr& level) {
 
   level->m_enemies->set_level(level->value);
   level->m_enemies->set_rooms(level->map->get_rooms_vector());
+  level->m_enemies->set_status(status);
   level->m_enemies->draw();
 }
 
@@ -85,15 +86,17 @@ void Game::go_prev(Level_Ptr& level) {
 void Game::draw_spawn(Level_Ptr& level) {
   const char spawn_ch = this->get_character(level, level->map->get_spawn());
 
-  if (spawn_ch != 'S' && level->value != 1)
-    this->add_character(level, level->map->get_spawn(), 'S');
+  if (spawn_ch != Constants::Game::SPAWN_CHAR && level->value != 1)
+    this->add_character(level, level->map->get_spawn(),
+                        Constants::Game::SPAWN_CHAR);
 }
 
 void Game::draw_exit(Level_Ptr& level) {
   const char exit_ch = this->get_character(level, level->map->get_spawn());
 
-  if (exit_ch != 'E')
-    this->add_character(level, level->map->get_exit(), 'E');
+  if (exit_ch != Constants::Game::EXIT_CHAR)
+    this->add_character(level, level->map->get_exit(),
+                        Constants::Game::EXIT_CHAR);
 }
 
 void Game::draw_spawn_exit_point(Level_Ptr& level) {

@@ -26,6 +26,11 @@ class Enemy {
   char get_character(const Coordinate& coordinate);
   void print_character(const Coordinate& coordinate, const char ch);
 
+  /** Helpers */
+	bool is_space(const char ch);
+  bool is_walkable(const char ch);
+  /***********/
+
  public:
   Enemy(WINDOW* map_window, const Grid& grid, char symbol);
   void draw();

@@ -89,7 +89,9 @@ const char Constants::Game::BLOCK_CHAR = '#';
 const char Constants::Game::FLOOR_CHAR = '=';
 const char Constants::Game::BONUS_CHAR = 'B';
 const char Constants::Game::LIFE_CHAR = 'L';
+const char Constants::Game::SPAWN_CHAR = 'S';
+const char Constants::Game::EXIT_CHAR = 'E';
 const char Constants::Game::TENEMY_CHAR = 'T';
-const char Constants::Game::MENEMY_CHAR = 'S';
+const char Constants::Game::MENEMY_CHAR = 'M';
 
 }  // namespace Rush
