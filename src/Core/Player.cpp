@@ -205,7 +205,7 @@ void Player::update_bullets() {
 void Player::draw_bullets() {
   this->update_bullets();
 
-  for (auto& bullet : this->bullets) {
+  for (auto const& bullet : this->bullets) {
     mvwaddch(this->map_window, bullet.previous.y, bullet.previous.x, ' ');
     mvwaddch(this->map_window, bullet.current.y, bullet.current.x, '*');
   }
@@ -233,6 +233,13 @@ void Player::set_window(WINDOW* map_window) {
 void Player::reset_coordinates() {
   this->current = {-1, -1};
   this->previous = {-1, -1};
+}
+
+void Player::reset_bullets() {
+  for (auto const& bullet : this->bullets)
+    mvwaddch(this->map_window, bullet.current.y, bullet.current.x, ' ');
+
+  this->bullets.clear();
 }
 
 }  // namespace Rush

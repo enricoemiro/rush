@@ -55,6 +55,7 @@ class Player {
   void set_coordinate(const Coordinate& coordinate);
   void set_window(WINDOW* map_window);
   void reset_coordinates();
+	void reset_bullets();
 };
 
 }  // namespace Rush
