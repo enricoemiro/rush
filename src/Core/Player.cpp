@@ -20,14 +20,17 @@ char Player::get_character(const Coordinate& coordinate) {
 }
 
 void Player::jump(const Coordinate& coordinate, bool& has_jumped) {
-  if (this->is_block(coordinate) || this->is_wall(coordinate))
+  const char ch_1 = this->get_character(coordinate);
+  const char ch_2 = this->get_character({coordinate.x, coordinate.y - 1});
+
+  if (this->is_block(ch_1) || this->is_floor(ch_1) || this->is_wall(ch_1)) {
     has_jumped = true;
 
-  if (this->is_block(coordinate) &&
-      (!this->is_block({coordinate.x, coordinate.y - 1}) &&
-       !this->is_wall({coordinate.x, coordinate.y - 1}))) {
-    this->current.y = coordinate.y - 1;
-    this->collision(this->current);
+    if (!this->is_block(ch_2) && !this->is_wall(ch_2) &&
+        !this->is_floor(ch_2)) {
+      this->current.y = coordinate.y - 1;
+      this->collision(this->current);
+    }
   }
 }
 
@@ -40,6 +43,11 @@ void Player::jump_up() {
 
 void Player::jump_down() {
   bool has_jumped = false;
+
+  // The player can't jump down if he's already on the floor
+  if (this->is_floor(
+          this->get_character({this->current.x, this->current.y + 1})))
+    return;
 
   for (int i = this->current.y + 2;
        i < getmaxy(this->map_window) - 1 && !has_jumped; ++i)
@@ -65,10 +73,6 @@ void Player::collision(const Coordinate& coordinate) {
   }
 }
 
-bool Player::is_flying(const Coordinate& coordinate) {
-  return this->get_character({coordinate.x, coordinate.y + 1}) != '=';
-}
-
 bool Player::is_right_edge(const Coordinate& coordinate) {
   return coordinate.x >= getmaxx(this->map_window) - 1;
 }
@@ -77,18 +81,26 @@ bool Player::is_left_edge(const Coordinate& coordinate) {
   return coordinate.x <= getbegx(this->map_window);
 }
 
-bool Player::is_block(const Coordinate& coordinate) {
-  return this->get_character(coordinate) == '=';
-}
-
 bool Player::is_double_block(const Coordinate& coordinate) {
   return this->get_character(coordinate) == '=' &&
          (this->get_character({coordinate.x, coordinate.y - 1}) == '=' ||
           coordinate.y - 1 == 0);
 }
 
-bool Player::is_wall(const Coordinate& coordinate) {
-  return this->get_character(coordinate) == 'X';
+bool Player::is_block(const char ch) {
+  return ch == Constants::Game::BLOCK_CHAR;
+}
+
+bool Player::is_floor(const char ch) {
+  return ch == Constants::Game::FLOOR_CHAR;
+}
+
+bool Player::is_wall(const char ch) {
+  return ch == Constants::Game::WALL_CHAR;
+}
+
+bool Player::is_flying(const char ch) {
+  return !this->is_floor(ch) && !this->is_block(ch);
 }
 
 void Player::move(int key_pressed) {
@@ -107,11 +119,14 @@ void Player::move(int key_pressed) {
   if (key_pressed == KEY_RIGHT || key_pressed == KEY_LEFT) {
     this->current.x += key_pressed == KEY_RIGHT ? 1 : -1;
 
+    const char ch_1 = this->get_character(this->current);
+    const char ch_2 =
+        this->get_character({this->previous.x, this->previous.y - 1});
+
     // Stops the player
     if (is_right_edge(this->current) || is_left_edge(this->current) ||
-        is_double_block(this->current) || is_wall(this->current) ||
-        (is_block({this->previous.x, this->previous.y - 1}) &&
-         is_block(this->current)))
+        is_double_block(this->current) || is_wall(ch_1) ||
+        (is_block(ch_2) && is_block(ch_1)))
       this->current = this->previous;
 
     // If the player encounters a single block, jump on it
@@ -125,7 +140,8 @@ void Player::move(int key_pressed) {
     //  &
     //  =   ->  =&
     // ====    ====
-    if (is_flying(this->current))
+    if (this->is_flying(
+            this->get_character({this->current.x, this->current.y + 1})))
       this->jump_down();
 
     // Check for collision
@@ -147,21 +163,12 @@ void Player::shoot(int key_pressed) {
 
   char direction;
 
-  // Shoot top
-  if (key_pressed == 87 || key_pressed == 119)
-    direction = 'W';
-
-  // Shoot left
-  if (key_pressed == 65 || key_pressed == 97)
-    direction = 'A';
-
-  // Shoot down
-  if (key_pressed == 83 || key_pressed == 115)
-    direction = 'S';
-
-  // Shoot right
-  if (key_pressed == 68 || key_pressed == 100)
-    direction = 'D';
+  // clang-format off
+  if (key_pressed == 87 || key_pressed == 119) direction = 'W';
+  if (key_pressed == 65 || key_pressed == 97) direction = 'A';
+  if (key_pressed == 83 || key_pressed == 115) direction = 'S';
+  if (key_pressed == 68 || key_pressed == 100) direction = 'D';
+  // clang-format on
 
   this->bullets.emplace_back(direction, this->current);
 }
@@ -170,7 +177,7 @@ void Player::update_bullets() {
   for (size_t i = 0; i < this->bullets.size(); ++i) {
     auto bullet = &this->bullets.at(i);
 
-    // Save the previous position
+    // Save previous position
     bullet->previous = bullet->current;
 
     // clang-format off

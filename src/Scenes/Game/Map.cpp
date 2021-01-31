@@ -114,10 +114,10 @@ std::string Map::get_available_moves(const Room& room) {
   std::string moves("D");
 
   if (can_move({room.start.x - this->grid.width, room.start.y}))
-    moves.append(1, 'L');
+    moves.append(2, 'L');
 
   if (can_move({room.start.x + this->grid.width, room.start.y}))
-    moves.append(1, 'R');
+    moves.append(2, 'R');
 
   return moves;
 }
@@ -232,27 +232,52 @@ void Map::replace_solution_path() {
 void Map::add_room(const Coordinate& start,
                    const std::vector<std::string>* rooms) {
   const std::string* room = this->get_room_template(rooms);
-  unsigned int counter_room = 0;
+  this->replace_grid(start, room);
+}
+
+void Map::replace_grid(const Coordinate& start, const std::string* room) {
+  std::size_t counter_room = 0;
 
   for (int i = start.y; i < start.y + this->grid.height; ++i) {
     for (int j = start.x; j < start.x + this->grid.width; ++j) {
-      char ch = 'X';
-
-      if (room) {
-        ch = room->at(counter_room++);
-
-        // clang-format off
-        if (ch == '0') ch = ' ';
-        if (ch == '1') ch = '=';
-        if (ch == '2') ch = rand() % 100 <= 60 ? ' ' : '=';
-        if (ch == 'S' || ch == 'E') this->spawn_exit.emplace_back(j, i);
-				if (ch == 'B') ch = rand() % 100 <= 30 ? 'B' : ' ';
-				if (ch == 'L') ch = rand() % 100 <= 20 ? 'L' : ' ';
-        // clang-format on
-      }
+      char ch = room ? this->decode_room({j, i}, room->at(counter_room++))
+                     : Constants::Game::WALL_CHAR;
 
       mvwaddch(this->screen.window, i, j, ch);
     }
+  }
+}
+
+char Map::decode_room(const Coordinate& current, const char ch) {
+  switch (ch) {
+    case '0':
+      return Constants::Game::SPACE_CHAR;
+
+    case '1':
+      return Constants::Game::BLOCK_CHAR;
+
+    case '2':
+      return rand() % 100 <= 45 ? Constants::Game::BLOCK_CHAR
+                                : Constants::Game::SPACE_CHAR;
+
+    case '3':
+      return Constants::Game::FLOOR_CHAR;
+
+    case 'B':
+      return rand() % 100 <= 30 ? Constants::Game::BONUS_CHAR
+                                : Constants::Game::SPACE_CHAR;
+
+    case 'L':
+      return rand() % 100 <= 20 ? Constants::Game::LIFE_CHAR
+                                : Constants::Game::SPACE_CHAR;
+
+    case 'S':
+    case 'E':
+      this->spawn_exit.emplace_back(current);
+      return ch;
+
+    default:
+      return ch;
   }
 }
 

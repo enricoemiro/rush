@@ -14,8 +14,14 @@ void MEnemy::update_enemies() {
 }
 
 void MEnemy::spawn_conditions(const Coordinate& coordinate) {
-  if (this->get_character(Coordinate(coordinate.x, coordinate.y + 1)) == '=' &&
-      (this->get_character(coordinate) == ' ') && (rand() % 100 <= level * 2)) {
+  const char ch_1 = this->get_character(Coordinate(coordinate));
+  const char ch_2 =
+      this->get_character(Coordinate(coordinate.x, coordinate.y + 1));
+
+  if (ch_1 == Constants::Game::SPACE_CHAR &&
+      (ch_2 == Constants::Game::FLOOR_CHAR ||
+       ch_2 == Constants::Game::BLOCK_CHAR) &&
+      rand() % 100 <= level * 2) {
     this->print_character(coordinate, this->symbol);
     this->enemies.push_back({'R', coordinate, coordinate});
   }
@@ -38,11 +44,15 @@ void MEnemy::move_left(SingleEnemy& enemy) {
 }
 
 bool MEnemy::can_move_left(SingleEnemy& enemy) {
+  const char ch_1 =
+      this->get_character(Coordinate(enemy.current.x - 1, enemy.current.y + 1));
+
   return enemy.direction == 'L' &&
+         (ch_1 == Constants::Game::BLOCK_CHAR ||
+          ch_1 == Constants::Game::FLOOR_CHAR) &&
          this->get_character(
-             Coordinate(enemy.current.x - 1, enemy.current.y + 1)) == '=' &&
-         this->get_character(
-             Coordinate(enemy.current.x - 1, enemy.current.y)) == ' ';
+             Coordinate(enemy.current.x - 1, enemy.current.y)) ==
+             Constants::Game::SPACE_CHAR;
 }
 
 void MEnemy::move_right(SingleEnemy& enemy) {
@@ -55,11 +65,15 @@ void MEnemy::move_right(SingleEnemy& enemy) {
 }
 
 bool MEnemy::can_move_right(SingleEnemy& enemy) {
+  const char ch_1 =
+      this->get_character(Coordinate(enemy.current.x + 1, enemy.current.y + 1));
+
   return enemy.direction == 'R' &&
+         (ch_1 == Constants::Game::BLOCK_CHAR ||
+          ch_1 == Constants::Game::FLOOR_CHAR) &&
          this->get_character(
-             Coordinate(enemy.current.x + 1, enemy.current.y + 1)) == '=' &&
-         this->get_character(
-             Coordinate(enemy.current.x + 1, enemy.current.y)) == ' ';
+             Coordinate(enemy.current.x + 1, enemy.current.y)) ==
+             Constants::Game::SPACE_CHAR;
 }
 
 void MEnemy::draw_updated() {

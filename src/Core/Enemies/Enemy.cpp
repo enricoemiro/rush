@@ -10,14 +10,14 @@ Enemy::Enemy(WINDOW* map_window, const Grid& grid, char symbol)
 
 void Enemy::draw() {
   if (!this->was_drawn) {
-    for (std::size_t i = 0; i < this->rooms.size(); ++i)
+    for (std::size_t i = 1; i < this->rooms.size(); ++i)
       this->select_y(i);
     this->was_drawn = true;
   }
 }
 
 void Enemy::select_y(int room_index) {
-  for (int i = this->rooms.at(room_index).start.y + 1;
+  for (int i = this->rooms.at(room_index).start.y;
        i < this->rooms.at(room_index).start.y + this->grid.height; ++i)
     this->select_x(room_index, i);
 }
@@ -33,8 +33,14 @@ char Enemy::get_character(const Coordinate& coordinate) {
 }
 
 void Enemy::spawn_conditions(const Coordinate& coordinate) {
-  if (this->get_character(Coordinate(coordinate.x, coordinate.y + 1)) == '=' &&
-      (this->get_character(coordinate) == ' ') && (rand() % 100 <= level * 3))
+  const char ch_1 = this->get_character(Coordinate(coordinate));
+  const char ch_2 =
+      this->get_character(Coordinate(coordinate.x, coordinate.y + 1));
+
+  if (ch_1 == Constants::Game::SPACE_CHAR &&
+      (ch_2 == Constants::Game::FLOOR_CHAR ||
+       ch_2 == Constants::Game::BLOCK_CHAR) &&
+      rand() % 100 <= level * 3)
     this->print_character(coordinate, this->symbol);
 }
 

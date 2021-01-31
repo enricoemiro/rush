@@ -20,6 +20,16 @@ struct Constants {
     static const std::vector<std::string> EXIT_CORRIDOR;
     static const std::vector<std::string> EXIT_LANDING;
   };
+
+  struct Game {
+    static const char PLAYER_CHAR;
+    static const char WALL_CHAR;
+    static const char FLOOR_CHAR;
+    static const char BLOCK_CHAR;
+    static const char SPACE_CHAR;
+    static const char BONUS_CHAR;
+    static const char LIFE_CHAR;
+  };
 };
 
 }  // namespace Rush

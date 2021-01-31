@@ -8,6 +8,7 @@
 #include "../../Core/Struct/Coordinate.hpp"
 #include "../../Core/Struct/Grid.hpp"
 #include "../../Core/Struct/Room.hpp"
+#include "../../Utilities/Constants.hpp"
 
 namespace Rush {
 

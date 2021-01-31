@@ -23,7 +23,7 @@ void Game::run() {
   this->player->set_coordinate(level->map->get_spawn());
 
   // Run the game
-  auto start = time(0);
+  auto last = time(0);
   while (!this->status->get_is_over()) {
     int key_pressed = getch();
 
@@ -42,10 +42,10 @@ void Game::run() {
         (key_pressed == 69 || key_pressed == 101))
       this->go_next(level);
 
-    if (time(0) - start == 1) {
+    if (time(0) - last >= 1) {
       this->player->draw_bullets();
       level->m_enemies->update_enemies();
-      start += 1;
+      last = time(0);
     }
 
     this->player->draw();
@@ -62,7 +62,7 @@ void Game::init_level(Level_Ptr& level) {
   level->t_enemies->set_level(level->value);
   level->t_enemies->set_rooms(level->map->get_rooms_vector());
   level->t_enemies->draw();
-  
+
   level->m_enemies->set_level(level->value);
   level->m_enemies->set_rooms(level->map->get_rooms_vector());
   level->m_enemies->draw();

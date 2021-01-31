@@ -32,11 +32,10 @@ class Map : public Scene {
   std::vector<Coordinate> spawn_exit;
   int number_rows;
   int number_columns;
-	bool was_drawn;
+  bool was_drawn;
 
   void generate_solution_path();
   void replace_solution_path();
-  void add_room(const Coordinate& start, const std::vector<std::string>* rooms);
 
   /** Helpers */
   void print_room(const Room& room);
@@ -55,6 +54,10 @@ class Map : public Scene {
   void add_rooms(int row);
   const std::vector<std::string>* get_room_templates(char room_type);
   const std::string* get_room_template(const std::vector<std::string>* rooms);
+
+  void add_room(const Coordinate& start, const std::vector<std::string>* rooms);
+  void replace_grid(const Coordinate& start, const std::string* room);
+  char decode_room(const Coordinate& current, const char ch);
   /***********/
 
  public:

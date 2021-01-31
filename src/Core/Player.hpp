@@ -5,6 +5,7 @@
 
 #include "../Scenes/Game/Map.hpp"
 #include "../Scenes/Game/Status.hpp"
+#include "../Utilities/Constants.hpp"
 #include "Struct/Coordinate.hpp"
 
 namespace Rush {
@@ -34,12 +35,13 @@ class Player {
 
   /** Helpers */
   char get_character(const Coordinate& coordinate);
-  bool is_flying(const Coordinate& coordinate);
   bool is_right_edge(const Coordinate& coordinate);
   bool is_left_edge(const Coordinate& coordinate);
-  bool is_block(const Coordinate& coordinate);
   bool is_double_block(const Coordinate& coordinate);
-  bool is_wall(const Coordinate& coordinate);
+  bool is_block(const char ch);
+  bool is_floor(const char ch);
+  bool is_wall(const char ch);
+  bool is_flying(const char ch);
   /***********/
 
  public:
