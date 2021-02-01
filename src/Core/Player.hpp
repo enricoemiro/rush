@@ -27,6 +27,7 @@ class Player {
   Coordinate current;
   Coordinate previous;
   std::vector<Bullet> bullets;
+  bool has_moved;
   void jump(const Coordinate& coordinate, bool& has_jumped);
   void jump_up();
   void jump_down();

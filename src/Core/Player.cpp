@@ -11,7 +11,8 @@ Player::Player(Status* status, char symbol)
       symbol(symbol),
       map_window(nullptr),
       current({-1, -1}),
-      previous({-1, -1}) {
+      previous({-1, -1}),
+      has_moved(true) {
   this->bullets.reserve(4);
 }
 
@@ -157,6 +158,8 @@ void Player::move(int key_pressed) {
     // Check for collision
     this->collision(this->current);
   }
+
+  this->has_moved = true;
 }
 
 void Player::shoot(int key_pressed) {
@@ -243,11 +246,15 @@ void Player::draw_bullets() {
   for (auto const& bullet : this->bullets) {
     mvwaddch(this->map_window, bullet.previous.y, bullet.previous.x, ' ');
     mvwaddch(this->map_window, bullet.current.y, bullet.current.x, '*');
+    wrefresh(this->map_window);
   }
 }
 
 void Player::draw() {
-  mvwaddch(this->map_window, this->previous.y, this->previous.x, ' ');
+  if (this->has_moved) {
+    mvwaddch(this->map_window, this->previous.y, this->previous.x, ' ');
+    this->has_moved = false;
+  }
   mvwaddch(this->map_window, this->current.y, this->current.x, this->symbol);
   wmove(this->map_window, this->current.y, this->current.x);
   wrefresh(this->map_window);
