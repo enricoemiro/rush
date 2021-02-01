@@ -19,6 +19,10 @@ char Player::get_character(const Coordinate& coordinate) {
   return mvwinch(this->map_window, coordinate.y, coordinate.x) & A_CHARTEXT;
 }
 
+void Player::clear(const Coordinate& coordinate) {
+  mvwaddch(this->map_window, coordinate.y, coordinate.x, ' ');
+}
+
 void Player::jump(const Coordinate& coordinate, bool& has_jumped) {
   const char ch_1 = this->get_character(coordinate);
   const char ch_2 = this->get_character({coordinate.x, coordinate.y - 1});
@@ -57,19 +61,19 @@ void Player::jump_down() {
 void Player::collision(const Coordinate& coordinate) {
   const char hitted_char = this->get_character(coordinate);
 
-  if (hitted_char == 'B') {
+  if (hitted_char == Constants::Game::BONUS_CHAR) {
     this->status->increment_score(10);
-    mvwaddch(this->map_window, coordinate.y, coordinate.x, ' ');
+    this->clear(coordinate);
   }
 
-  if (hitted_char == 'L') {
+  if (hitted_char == Constants::Game::LIFE_CHAR) {
     this->status->increment_lives();
-    mvwaddch(this->map_window, coordinate.y, coordinate.x, ' ');
+    this->clear(coordinate);
   }
 
-  if (hitted_char == 'M' || hitted_char == 'T') {
+  if (this->is_enemy(hitted_char)) {
     this->status->decrement_lives();
-    mvwaddch(this->map_window, coordinate.y, coordinate.x, ' ');
+    this->clear(coordinate);
   }
 }
 
@@ -82,9 +86,15 @@ bool Player::is_left_edge(const Coordinate& coordinate) {
 }
 
 bool Player::is_double_block(const Coordinate& coordinate) {
-  return this->get_character(coordinate) == '=' &&
-         (this->get_character({coordinate.x, coordinate.y - 1}) == '=' ||
+  return this->is_block(this->get_character(coordinate)) &&
+         (this->is_block(
+              this->get_character({coordinate.x, coordinate.y - 1})) ||
           coordinate.y - 1 == 0);
+}
+
+bool Player::is_enemy(const char ch) {
+  return ch == Constants::Game::MENEMY_CHAR ||
+         ch == Constants::Game::TENEMY_CHAR;
 }
 
 bool Player::is_block(const char ch) {
@@ -173,6 +183,18 @@ void Player::shoot(int key_pressed) {
   this->bullets.emplace_back(direction, this->current);
 }
 
+void Player::shoot_up(Coordinate& coordinate) {
+  if (this->is_block(this->get_character(coordinate)) &&
+      !this->is_double_block(coordinate))
+    coordinate.y -= 1;
+}
+
+void Player::shoot_down(Coordinate& coordinate) {
+  if (this->is_block(this->get_character(coordinate)) &&
+      !this->is_double_block(coordinate))
+    coordinate.y += 1;
+}
+
 void Player::update_bullets() {
   for (size_t i = 0; i < this->bullets.size(); ++i) {
     auto bullet = &this->bullets.at(i);
@@ -180,10 +202,18 @@ void Player::update_bullets() {
     // Save previous position
     bullet->previous = bullet->current;
 
+    if (bullet->direction == 'W') {
+      bullet->current.y -= 1;
+      this->shoot_up(bullet->current);
+    }
+
+    if (bullet->direction == 'S') {
+      bullet->current.y += 1;
+      this->shoot_down(bullet->current);
+    }
+
     // clang-format off
-    if (bullet->direction == 'W') bullet->current.y -= 1;
     if (bullet->direction == 'A') bullet->current.x -= 1;
-    if (bullet->direction == 'S') bullet->current.y += 1;
     if (bullet->direction == 'D') bullet->current.x += 1;
     // clang-format on
 
@@ -191,12 +221,12 @@ void Player::update_bullets() {
     const char hitted_char = this->get_character(bullet->current);
 
     if (hitted_char != ' ') {
-      if (hitted_char == 'M' || hitted_char == 'T') {
+      if (this->is_enemy(hitted_char)) {
         this->status->increment_score(20);
-        mvwaddch(this->map_window, bullet->current.y, bullet->current.x, ' ');
+        this->clear(bullet->current);
       }
 
-      mvwaddch(this->map_window, bullet->previous.y, bullet->previous.x, ' ');
+      this->clear(bullet->previous);
       this->bullets.erase(this->bullets.begin() + i);
     }
   }

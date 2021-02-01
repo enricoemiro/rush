@@ -32,12 +32,16 @@ class Player {
   void jump_down();
   void collision(const Coordinate& coordinate);
   void update_bullets();
+  void shoot_up(Coordinate& coordinate);
+  void shoot_down(Coordinate& coordinate);
 
   /** Helpers */
   char get_character(const Coordinate& coordinate);
+  void clear(const Coordinate& coordinate);
   bool is_right_edge(const Coordinate& coordinate);
   bool is_left_edge(const Coordinate& coordinate);
   bool is_double_block(const Coordinate& coordinate);
+  bool is_enemy(const char ch);
   bool is_block(const char ch);
   bool is_floor(const char ch);
   bool is_wall(const char ch);
@@ -55,7 +59,7 @@ class Player {
   void set_coordinate(const Coordinate& coordinate);
   void set_window(WINDOW* map_window);
   void reset_coordinates();
-	void reset_bullets();
+  void reset_bullets();
 };
 
 }  // namespace Rush
