@@ -226,6 +226,11 @@ void Player::update_bullets() {
         this->clear(bullet->current);
       }
 
+      if (this->symbol == hitted_char) {
+        this->status->decrement_lives();
+        this->clear(bullet->current);
+      }
+
       this->clear(bullet->previous);
       this->bullets.erase(this->bullets.begin() + i);
     }
