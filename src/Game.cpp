@@ -25,10 +25,12 @@ void Game::run() {
   // Run the game
   auto last = time(0);
   while (!this->status->get_is_over()) {
+    this->draw_spawn_exit_point(level);
     int key_pressed = getch();
 
     this->player->move(key_pressed);
     this->player->shoot(key_pressed);
+    this->player->draw();
 
     // Go to the previous level
     // Qq = 81/113
@@ -47,9 +49,6 @@ void Game::run() {
       level->m_enemies->update_enemies();
       last = time(0);
     }
-
-    this->player->draw();
-    this->draw_spawn_exit_point(level);
   }
 }
 
