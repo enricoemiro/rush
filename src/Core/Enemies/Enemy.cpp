@@ -8,6 +8,8 @@ Enemy::Enemy(WINDOW* map_window, const Grid& grid, char symbol)
   this->was_drawn = false;
 }
 
+Enemy::~Enemy() {}
+
 void Enemy::draw() {
   if (!this->was_drawn) {
     for (std::size_t i = 1; i < this->rooms.size(); ++i)

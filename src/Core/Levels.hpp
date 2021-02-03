@@ -12,9 +12,7 @@ class Levels {
  private:
   Screen map_screen;
   Grid map_grid;
-
- protected:
-  Level* head;
+  Level_Ptr head;
   void prepend();
 
  public:

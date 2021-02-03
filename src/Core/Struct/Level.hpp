@@ -18,6 +18,7 @@ struct Level {
   Level* next;
 
   Level(int value, const Screen& map_screen, const Grid& map_grid);
+  ~Level();
 };
 
 typedef Level* Level_Ptr;

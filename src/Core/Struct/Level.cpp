@@ -14,4 +14,10 @@ Level::Level(int value, const Screen& map_screen, const Grid& map_grid)
       prev(nullptr),
       next(nullptr) {}
 
+Level::~Level() {
+  delete this->map;
+  delete this->t_enemies;
+  delete this->m_enemies;
+}
+
 }  // namespace Rush

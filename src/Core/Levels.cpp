@@ -19,8 +19,7 @@ Levels::~Levels() {
 
     while (curr) {
       next = curr->next;
-      delete curr->map;
-      delete curr;
+      curr->~Level();
       curr = next;
     }
 
