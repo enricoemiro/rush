@@ -80,7 +80,7 @@ void Map::generate_solution_path() {
     // Update the last room pointer
     this->print_room(next_room);
     this->rooms.emplace_back(next_room);
-    last_room = last_room + 1;
+    last_room = &this->rooms.back();
   }
 
   // If there are two consecutive rooms of type 2,
