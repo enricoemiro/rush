@@ -42,7 +42,10 @@ void Player::jump(const Coordinate& coordinate, bool& has_jumped) {
 void Player::jump_up() {
   bool has_jumped = false;
 
-  for (int i = this->current.y - 1; i > 1 && !has_jumped; --i)
+  for (int i = this->current.y - 1;
+       i > 1 && !has_jumped &&
+       !is_floor(this->get_character({this->current.x, i}));
+       --i)
     this->jump({this->current.x, i}, has_jumped);
 }
 
