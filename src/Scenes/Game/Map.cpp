@@ -240,8 +240,11 @@ void Map::replace_grid(const Coordinate& start, const std::string* room) {
 
   for (int i = start.y; i < start.y + this->grid.height; ++i) {
     for (int j = start.x; j < start.x + this->grid.width; ++j) {
-      char ch = room ? this->decode_room({j, i}, room->at(counter_room++))
-                     : Constants::Game::WALL_CHAR;
+      char ch =
+          room && room->size() == static_cast<std::size_t>(this->grid.width *
+                                                           this->grid.height)
+              ? this->decode_room({j, i}, room->at(counter_room++))
+              : Constants::Game::WALL_CHAR;
 
       mvwaddch(this->screen.window, i, j, ch);
     }
