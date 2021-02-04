@@ -5,7 +5,6 @@
 
 namespace Rush {
 
-#define DEBUG 1
 #define EXIT_IF_TRUE(expression, msg) \
   {                                   \
     if (expression) {                 \
