@@ -27,7 +27,7 @@ void Game::run() {
   this->player->set_coordinate(level->map->get_spawn());
 
   // Run the game
-  auto last = time(0);
+  auto last = std::chrono::steady_clock::now();
   while (!this->status->get_is_over()) {
     this->draw_spawn_exit_point(level);
     int key_pressed = getch();
@@ -48,10 +48,13 @@ void Game::run() {
         (key_pressed == 69 || key_pressed == 101))
       this->go_next(level);
 
-    if (time(0) - last >= 1) {
+    // Update bullets and m_enemies position
+    std::chrono::duration<double> elapsed =
+        std::chrono::steady_clock::now() - last;
+    if (elapsed.count() >= 0.5f) {
       this->player->draw_bullets();
       level->m_enemies->update_enemies();
-      last = time(0);
+      last = std::chrono::steady_clock::now();
     }
   }
 

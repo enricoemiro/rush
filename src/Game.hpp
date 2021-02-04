@@ -1,6 +1,7 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
+#include <chrono>
 #include "Core/Levels.hpp"
 #include "Core/Player.hpp"
 #include "Scenes/Game/Status.hpp"
