@@ -13,8 +13,6 @@ void Status::resize(const std::vector<std::string>& messages) {
     const std::string curr = messages.at(i);
 
     if (curr.size() > static_cast<std::size_t>(this->screen.size.width)) {
-      wclear(this->screen.window);
-      this->refresh();
       this->screen.size.width = curr.size();
       wresize(this->screen.window, this->screen.size.height + 2,
               this->screen.size.width + 2);
@@ -23,11 +21,14 @@ void Status::resize(const std::vector<std::string>& messages) {
 }
 
 void Status::print_messages(const std::vector<std::string>& messages) {
+  wclear(this->screen.window);
+  this->draw_edges();
   for (std::size_t i = 0; i < messages.size(); ++i) {
     const std::string curr = messages.at(i);
 
     mvwprintw(this->screen.window, i + 1, 1, curr.data());
   }
+  this->refresh();
 }
 
 void Status::draw() {
@@ -36,9 +37,7 @@ void Status::draw() {
                                        "Lives: " + std::to_string(this->lives)};
 
   this->resize(messages);
-  this->draw_edges();
   this->print_messages(messages);
-  this->refresh();
 }
 
 void Status::increment_score(int score) {
