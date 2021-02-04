@@ -5,10 +5,10 @@
 #include <stdlib.h>
 #include <vector>
 
-#include "../../Core/Struct/Coordinate.hpp"
-#include "../../Core/Struct/Grid.hpp"
-#include "../../Core/Struct/Room.hpp"
 #include "../../Utilities/Constants.hpp"
+#include "../Struct/Coordinate.hpp"
+#include "../Struct/Grid.hpp"
+#include "../Struct/Room.hpp"
 
 namespace Rush {
 
