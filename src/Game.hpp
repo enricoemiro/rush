@@ -4,6 +4,7 @@
 #include "Core/Levels.hpp"
 #include "Core/Player.hpp"
 #include "Scenes/Game/Status.hpp"
+#include "Scenes/UI/UI.hpp"
 
 namespace Rush {
 
@@ -12,6 +13,7 @@ class Game {
   Levels* levels;
   Player* player;
   Status* status;
+  UI* ui;
   void init_level(Level_Ptr& level);
   void go_next(Level_Ptr& level);
   void go_prev(Level_Ptr& level);

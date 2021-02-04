@@ -64,6 +64,10 @@ bool Status::get_is_over() const {
   return this->is_over;
 }
 
+int Status::get_score() {
+  return this->score;
+}
+
 void Status::set_level(int level) {
   this->level = level;
   this->draw();

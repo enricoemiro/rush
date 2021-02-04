@@ -7,15 +7,19 @@ Game::Game() {
       new Levels(Screen(Grid(40, 32), Coordinate(0, 0)), Grid(10, 8));
   this->status = new Status(Screen(Grid(8, 3), Coordinate(42, 0)), 1, 0, 3);
   this->player = new Player(this->status, Constants::Game::PLAYER_CHAR);
+  this->ui = new UI(Screen(Grid(40, 32), Coordinate(0, 0)));
 }
 
 Game::~Game() {
   delete this->levels;
   delete this->status;
   delete this->player;
+  delete this->ui;
 }
 
 void Game::run() {
+  this->ui->initial_screen();
+
   Level_Ptr level = this->levels->get_curr();
 
   // Start the first level
@@ -50,6 +54,9 @@ void Game::run() {
       last = time(0);
     }
   }
+
+  this->ui->set_score(this->status->get_score());
+  this->ui->game_over();
 }
 
 void Game::init_level(Level_Ptr& level) {

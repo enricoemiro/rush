@@ -25,6 +25,7 @@ class Status : public Scene {
   void increment_lives();
   void decrement_lives();
   bool get_is_over() const;
+  int get_score();
   void set_level(int level);
 };
 
