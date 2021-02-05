@@ -15,18 +15,15 @@ class Game {
   Player* player;
   Status* status;
   UI* ui;
-  void init_level(Level_Ptr& level);
-  void go_next(Level_Ptr& level);
-  void go_prev(Level_Ptr& level);
-  void draw_spawn(Level_Ptr& level);
-  void draw_exit(Level_Ptr& level);
-  void draw_spawn_exit_point(Level_Ptr& level);
+  void init_level();
+  void go_next();
+  void go_prev();
+  void draw_spawn();
+  void draw_exit();
 
   /** Helpers */
-  char get_character(Level_Ptr& level, const Coordinate& coordinate);
-  void add_character(Level_Ptr& level,
-                     const Coordinate& coordinate,
-                     const char ch);
+  char get_character(const Coordinate& coordinate);
+  void add_character(const Coordinate& coordinate, const char ch);
   /***********/
 
  public:
