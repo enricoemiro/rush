@@ -227,11 +227,20 @@ void Player::update_bullets() {
     const char hitted_char = this->get_character(bullet->current);
 
     if (hitted_char != ' ') {
+      // Collision player-enemies
       if (this->is_enemy(hitted_char)) {
-        this->status->increment_score(20);
+        // +5 for TEnemy
+        if (hitted_char == Constants::Game::TENEMY_CHAR)
+          this->status->increment_score(5);
+
+        // +10 for MEnemy
+        if (hitted_char == Constants::Game::MENEMY_CHAR)
+          this->status->increment_score(10);
+
         this->clear(bullet->current);
       }
 
+      // Collision player-bullet
       if (this->symbol == hitted_char) {
         this->status->decrement_lives();
         this->clear(bullet->current);
