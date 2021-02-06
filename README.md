@@ -1,6 +1,10 @@
 # Rush
 Gioco Top-Down Platform based scritto in C++.
 
+<p align="center">
+  <img src="./screenshot.jpg" />
+</p>
+
 ## Installazione
 Scaricare la cartella di gioco e posizionarsi all'interno di essa.
 Per compilare i file sorgenti usare il comando `make` e `./game` per avviare il gioco.
