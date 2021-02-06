@@ -24,8 +24,10 @@ void UI::game_over() {
     std::string exit = "PRESS ESC BUTTON TO EXIT";
     mvwprintw(this->screen.window, (this->screen.size.height / 4) * 3 + 1,
               (this->screen.size.width - exit.length()) / 2, exit.c_str());
+    curs_set(0);
   }
   wclear(this->screen.window);
+  curs_set(1);
 }
 
 void UI::initial_screen() {
@@ -56,8 +58,10 @@ void UI::initial_screen() {
     mvwprintw(this->screen.window, (this->screen.size.height / 4) * 3 + 1,
               (this->screen.size.width - start.length()) / 2, start.c_str());
     wattroff(this->screen.window, A_BLINK);
+    curs_set(0);
   }
   wclear(this->screen.window);
+  curs_set(1);
 }
 
 void UI::set_score(int score) {
@@ -67,7 +71,9 @@ void UI::set_score(int score) {
 bool UI::press_enter(const int key_pressed) {
   return key_pressed == 10;
 }
+
 bool UI::press_esc(const int key_pressed) {
+  set_escdelay(0);
   return key_pressed == 27;
 }
 
