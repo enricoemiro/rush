@@ -17,11 +17,15 @@ void MEnemy::update_enemies() {
 void MEnemy::spawn_conditions(const Coordinate& coordinate) {
   const char ch_1 = this->get_character(coordinate);
   const char ch_2 = this->get_character({coordinate.x, coordinate.y + 1});
+  const char ch_3 = this->get_character({coordinate.x + 1, coordinate.y + 1});
+  const char ch_4 = this->get_character({coordinate.x - 1, coordinate.y + 1});
 
   if (this->is_space(ch_1) && this->is_walkable(ch_2) &&
       rand() % 100 <= level * 1) {
     this->print_character(coordinate, this->symbol);
-    this->enemies.push_back({'R', coordinate, coordinate});
+
+    if (this->is_walkable(ch_3) || this->is_walkable(ch_4))
+      this->enemies.push_back({'R', coordinate, coordinate});
   }
 }
 
@@ -37,7 +41,6 @@ void MEnemy::update_positions() {
 // checking if there is a collision
 void MEnemy::collision(SingleEnemy& enemy, int index) {
   const char ch_current = this->get_character(enemy.current);
-  const char ch_previous = this->get_character(enemy.previous);
   const char ch_M = this->get_character({enemy.current.x - 1, enemy.current.y});
   const char ch_P = this->get_character({enemy.current.x + 1, enemy.current.y});
 
