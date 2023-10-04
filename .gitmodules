@@ -1,0 +1,7 @@
+[submodule "vendor/ncurses"]
+  path = vendor/ncurses
+  url = https://github.com/mirror/ncurses.git
+
+[submodule "vendor/spdlog"]
+  path = vendor/spdlog
+  url = https://github.com/gabime/spdlog.git

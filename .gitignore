@@ -1,5 +1,31 @@
-# Excludes object files
-*.o
-*.d
-game
-.vscode
+# Ignore all the files, except the ones we expect.
+*
+!*/
+
+# Allowed top-level files
+!.clang-format
+!.cmake-format.json
+!.gitignore
+!.gitmodules
+!.pre-commit-config.yaml
+!.prettierrc
+!LICENSE
+!commitlint.config.js
+!README.md
+!CMakeLists.txt
+!requirements.txt
+
+# .vscode directory
+!.vscode/c_cpp_properties.json
+!.vscode/extensions.json
+!.vscode/tasks.json
+
+# src directory
+!src/**/*.hh
+!src/**/*.cc
+
+# vendor directory
+!vendor/**
+
+# Include all .gitkeep files
+!**/.gitkeep
