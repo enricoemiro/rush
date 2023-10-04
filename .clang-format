@@ -1,1 +1,4 @@
-BasedOnStyle: Chromium
+---
+BasedOnStyle: Microsoft
+Standard: c++20
+AllowShortFunctionsOnASingleLine: Inline

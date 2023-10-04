@@ -1,43 +1,53 @@
 # Rush
-Gioco Top-Down Platform based scritto in C++.
+
+Top-Down Platform-based game written in C++.
 
 <p align="center">
   <img src="./screenshot.jpg" />
 </p>
 
-## Installazione
-Scaricare la cartella di gioco e posizionarsi all'interno di essa.
-Per compilare i file sorgenti usare il comando `make` e `./game` per avviare il gioco.
+## Installation
 
-## Descrizione
+Download the game folder and navigate to it.
+To compile the source files, use the `make` command, and use `./game` to start the game.
 
-### Comandi
-Arrow keys per muovere il personaggio e WASD per sparare.
+## Description
 
-### Il gioco
-Lo scopo del gioco è superare quanti più livelli possibile.
-Il gioco termina quando si perdono tutte le vite.
+### Controls
 
-### Mappa
-Nella mappa sono presenti i seguenti caratteri:
-* &: Rappresenta il Player;
-* B: Rappresenta un Bonus;
-* L: Rappresenta una Vita;
-* T: Rappresenta un TEnemy;
-* M: Rappresenta un MEnemy;
-* S: Rappresenta la porta di entrata;
-* E: Rappresenta la porta di uscita;
-* *: Rappresenta uno sparo;
+Use Arrow keys to move the character and WASD to shoot.
 
-### Punteggio
-Il punteggio viene incrementato se:
-* si raccoglie un Bonus (+10);
-* si uccide un TEnemy (+5);
-* si uccide un MEnemy (+10);
+### The Game
 
-### Vite
-Le vite incrementano se si raccoglie una Vita. Le vite decrementano se ci si scontra con un TEnemy o con un MEnemy.
+The objective of the game is to pass as many levels as possible.
+The game ends when you run out of lives.
 
-### Livelli
-Per passare al livello successivo bisogna riuscire a raggiungere la porta di uscita 'E' e cliccando il tasto 'E'.
-Si può tornare al livello precedente ritornando sulla porta di entrata 'S' e cliccando il tasto 'Q'.
+### Map
+
+The map contains the following characters:
+
+- &: represents the player;
+- B: represents a bonus;
+- L: represents a life;
+- T: represents a TEnemy;
+- M: represents an MEnemy;
+- S: represents the spawn door;
+- E: represents the exit door;
+- \*: represents a shot;
+
+### Scoring
+
+The score is increased when:
+
+- a bonus is collected (+10);
+- a TEnemy is killed (+5);
+- an MEnemy is killed (+10);
+
+### Lives
+
+Lives increase when a life is collected. Lives decrease if you collide with a TEnemy or an MEnemy.
+
+### Levels
+
+To advance to the next level, you need to reach the exit door 'E' and press the 'E' key.
+You can return to the previous level by going back to the spawn door 'S' and pressing the 'Q' key.
